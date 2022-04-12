@@ -1,8 +1,11 @@
-NAME	=	minishell
+NAME		=	minishell
 
-CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra
+CC			=	gcc
+CFLAGS		=	-Wall -Werror -Wextra -g
 READLINE	=	-lreadline
+
+RL_INCLUDE	=	/Users/ladarys/.brew/opt/readline/include
+RL_LIB		=	/Users/ladarys/.brew/opt/readline/lib
 
 INCLUDES	=	includes
 HEADER		=	minishell.h
@@ -11,7 +14,9 @@ LIBFT		=	./libft/libft.a
 
 SRCS_DIR		=	srcs
 
-SRCS_LIST	=	main.c
+SRCS_LIST	=	main.c \
+				lexer_1.c \
+				lexer_2.c
 SRCS		=	$(addprefix $(SRCS_DIR)/,$(SRCS_LIST))
 
 OBJS_DIR	=	objs
@@ -33,11 +38,11 @@ WHITE		=	\033[1;37m
 all : $(OBJS_DIR) $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) -o $@ $^ $(READLINE)
+	@$(CC) $(CFLAGS) $(READLINE) -L$(RL_LIB) -I$(RL_INCLUDE) $^ -o $@
 	@echo "$(GREEN)Project succesfully compiled"
 
 $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c $(INCLUDES)/$(HEADER) Makefile
-	@$(CC) $(CFLAGS) -c $< -o $@ $(READLINE)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(RL_INCLUDE)
 	@echo "$(BLUE)Creating object file$(WHITE) --> $(notdir $@) --> $(GREEN)[Done]$(NORMAL)"
 
 $(OBJS_DIR) :
