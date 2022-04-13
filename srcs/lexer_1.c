@@ -1,67 +1,6 @@
 #include "../includes/minishell.h"
 
-static t_token	*new_token(char *str, int *index)
-{
-	t_token	*token;
-
-	if (!str)
-		exit (1); // manage_error (error malloc ft_strdup)
-	token = (t_token *)malloc(sizeof(t_token));
-	if (!token)
-		exit (1); // manage_error (error malloc token)
-	token->content = str;
-	token->next = NULL;
-	*index = *index + ft_strlen(str) - 1;
-	return (token);
-}
-
-static void	add_back_token(t_token **tokens, t_token *new)
-{
-	t_token	*tmp;
-
-	if (new)
-	{
-		tmp = *tokens;
-		if (!tmp)
-			*tokens = new;
-		else
-		{
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = new;
-		}
-	}
-}
-
-static int	check_open_quotes(int index)
-{
-	int	i;
-
-	i = 0;
-	while (i < index)
-	{
-		if (g_data.input[i] == '"')
-		{
-			i++;
-			while (i < index && g_data.input[i] != '"')
-				i++;
-			if (i == index)
-				return (1);
-		}
-		if (g_data.input[i] == '\'')
-		{
-			i++;
-			while (i < index && g_data.input[i] != '\'')
-				i++;
-			if (i == index)
-				return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-static char	*str_token(int *index)
+static char	*word_token(int *index)
 {
 	char	*content;
 	char	*tmp;
@@ -72,13 +11,54 @@ static char	*str_token(int *index)
 	if (!tmp)
 		exit (1); // manage_error (error malloc token)
 	i = 0;
-	while (!ft_strchr(" <>|", content[i]) || check_open_quotes(*index + i))
+	while (!ft_strchr(" \t<>|\"\'", content[i]))
 	{
 		tmp[i] = content[i];
 		i++;
 	}
 	tmp[i] = '\0';
 	return (tmp);
+}
+
+static char	*quotes_token(char quote, int *index)
+{
+	char	*content;
+	char	*tmp;
+	int		i;
+
+	content = g_data.input + *index;
+	tmp = (char *)malloc(sizeof(char) * (ft_strlen(content) + 1));
+	if (!tmp)
+		exit (1); // manage_error (error malloc token)
+	i = 0;
+	tmp[i++] = quote;
+	while (content[i] != quote)
+	{
+		tmp[i] = content[i];
+		i++;
+	}
+	tmp[i++] = quote;
+	tmp[i] = '\0';
+	return (tmp);
+}
+
+static void	token_word_quotes_dquotes(int *i)
+{
+	if (g_data.input[*i] == '"')
+		add_token(&g_data.tokens, new_token(quotes_token('"', i), \
+		DQUOTES, i));
+	else if (g_data.input[*i] == '\'')
+		add_token(&g_data.tokens, new_token(quotes_token('\'', i), \
+		QUOTES, i));
+	else
+		add_token(&g_data.tokens, new_token(word_token(i), WORD, i));
+}
+
+static void	token_separator(int *i)
+{
+	add_token(&g_data.tokens, new_token(ft_strdup(" "), SEPARATOR, i));
+	while (ft_strchr(" \t", *(g_data.input + *i)))
+		(*i)++;
 }
 
 void	lexer(void)
@@ -88,20 +68,20 @@ void	lexer(void)
 	i = 0;
 	while (*(g_data.input + i))
 	{
-		while (*(g_data.input + i) == ' ')
-			i++;
+		if (ft_strchr(" \t", *(g_data.input + i)))
+			token_separator(&i);
 		if (!ft_strncmp(g_data.input + i, "<<", 2))
-			add_back_token(&g_data.tokens, new_token(ft_strdup("<<"), &i));
+			add_token(&g_data.tokens, new_token(ft_strdup("<<"), RDR_SRC, &i));
 		else if (!ft_strncmp(g_data.input + i, ">>", 2))
-			add_back_token(&g_data.tokens, new_token(ft_strdup(">>"), &i));
+			add_token(&g_data.tokens, new_token(ft_strdup(">>"), RDR_APD, &i));
 		else if (!ft_strncmp(g_data.input + i, "<", 1))
-			add_back_token(&g_data.tokens, new_token(ft_strdup("<"), &i));
+			add_token(&g_data.tokens, new_token(ft_strdup("<"), RDR_IN, &i));
 		else if (!ft_strncmp(g_data.input + i, ">", 1))
-			add_back_token(&g_data.tokens, new_token(ft_strdup(">"), &i));
+			add_token(&g_data.tokens, new_token(ft_strdup(">"), RDR_OUT, &i));
 		else if (!ft_strncmp(g_data.input + i, "|", 1))
-			add_back_token(&g_data.tokens, new_token(ft_strdup("|"), &i));
+			add_token(&g_data.tokens, new_token(ft_strdup("|"), PIPE, &i));
 		else
-			add_back_token(&g_data.tokens, new_token(str_token(&i), &i));
+			token_word_quotes_dquotes(&i);
 		i++;
 	}
 	lexer_update_tokens();

@@ -16,7 +16,8 @@ SRCS_DIR		=	srcs
 
 SRCS_LIST	=	main.c \
 				lexer_1.c \
-				lexer_2.c
+				lexer_2.c \
+				tokens.c
 SRCS		=	$(addprefix $(SRCS_DIR)/,$(SRCS_LIST))
 
 OBJS_DIR	=	objs

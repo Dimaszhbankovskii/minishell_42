@@ -26,7 +26,7 @@ void	check_print(void)
 		printf("NULL\n");
 	while (tmp)
 	{
-		printf("%s\n", tmp->content);
+		printf("token: type = %d	{%s}\n", tmp->type, tmp->content);
 		tmp = tmp->next;
 	}
 }
@@ -54,6 +54,7 @@ int	main(int argc, char **argv)
 		}
 		lexer();
 		check_print();
+		// free_g_data
 	}
 	return (0);
 }
