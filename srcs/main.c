@@ -10,8 +10,33 @@ char	*ft_readline(void)
 	return (str);
 }
 
-void	init_g_data(void)
+char	**new_envp(char **envp)
 {
+	char	**new_envp;
+	int		i;
+
+	i = 0;
+	while (envp && envp[i])
+		i++;
+	new_envp = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!new_envp)
+		exit (1); // manage error
+	i = 0;
+	while (envp && envp[i])
+	{
+		new_envp[i] = ft_strdup(envp[i]);
+		if (!new_envp[i])
+			exit (1); // manage error
+		i++;
+	}
+	new_envp[i] = NULL;
+	return (new_envp);
+}
+
+void	init_g_data(char **envp)
+{
+	g_data.envp = new_envp(envp);
+	g_data.status = 0;
 	g_data.input = NULL;
 	g_data.tokens = NULL;
 }
@@ -31,12 +56,12 @@ void	check_print(void)
 	}
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	if (argc != 1)
 		exit (1); // error num args
 	(void)argv;
-	init_g_data();
+	init_g_data(envp);
 	while (1)
 	{
 		g_data.input = ft_readline();
@@ -53,8 +78,9 @@ int	main(int argc, char **argv)
 			break ;
 		}
 		lexer();
+		parser();
 		check_print();
-		// free_g_data
+		clear_g_data();
 	}
 	return (0);
 }

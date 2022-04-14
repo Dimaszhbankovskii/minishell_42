@@ -44,14 +44,17 @@ static char	*quotes_token(char quote, int *index)
 
 static void	token_word_quotes_dquotes(int *i)
 {
-	if (g_data.input[*i] == '"')
-		add_token(&g_data.tokens, new_token(quotes_token('"', i), \
-		DQUOTES, i));
-	else if (g_data.input[*i] == '\'')
-		add_token(&g_data.tokens, new_token(quotes_token('\'', i), \
-		QUOTES, i));
-	else
-		add_token(&g_data.tokens, new_token(word_token(i), WORD, i));
+	if (*(g_data.input + *i))
+	{
+		if (g_data.input[*i] == '"')
+			add_token(&g_data.tokens, new_token(quotes_token('"', i), \
+			DQUOTES, i));
+		else if (g_data.input[*i] == '\'')
+			add_token(&g_data.tokens, new_token(quotes_token('\'', i), \
+			QUOTES, i));
+		else
+			add_token(&g_data.tokens, new_token(word_token(i), WORD, i));
+	}
 }
 
 static void	token_separator(int *i)

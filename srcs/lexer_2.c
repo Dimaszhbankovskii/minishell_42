@@ -19,12 +19,12 @@ void	lexer_update_tokens(void)
 	tmp = g_data.tokens;
 	while (tmp)
 	{
+		if (tmp->type == WORD || tmp->type == DQUOTES)
+			open_variable(tmp);
 		if (tmp->type == QUOTES || tmp->type == DQUOTES)
 		{
 			tmp->content = remove_outer_quotes(tmp->content);
 		}
-		// if (tmp->type == WORD || tmp->type == QUOTES)
-		// 	open_variable(tmp->content); // раскрытие $
 		tmp = tmp->next;
 	}
 }

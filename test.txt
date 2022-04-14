@@ -1,0 +1,2 @@
+cat -n < file | grep word
+cat -n < file | grep word   >>     file555

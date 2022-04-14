@@ -9,7 +9,7 @@ char	*ft_strdup(const char *s1)
 	if (!s2)
 		return (NULL);
 	i = 0;
-	while (s1[i])
+	while (s1 && s1[i])
 	{
 		s2[i] = s1[i];
 		i++;
