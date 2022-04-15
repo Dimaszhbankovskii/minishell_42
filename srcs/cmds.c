@@ -39,3 +39,24 @@ void	add_cmd(t_cmd **cmds, t_cmd *new)
 			last_cmd(*cmds)->next = new;
 	}
 }
+
+void	free_cmd(void)
+{
+	t_cmd	*tmp;
+
+	tmp = g_data.cmds;
+	if (tmp)
+	{
+		while (tmp)
+		{
+			free_two_array_char(tmp->args);
+			tmp->infd=free_dict(tmp->infd);
+			tmp->outfd=free_dict(tmp->outfd);
+			if (tmp->tmpname)
+				free(tmp->tmpname);
+			tmp = tmp->next;
+		}
+		free (g_data.cmds);
+		g_data.cmds = NULL;
+	}
+}

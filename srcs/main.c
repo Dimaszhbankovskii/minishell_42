@@ -39,21 +39,17 @@ void	init_g_data(char **envp)
 	g_data.status = 0;
 	g_data.input = NULL;
 	g_data.tokens = NULL;
+	g_data.cmds = NULL;
 }
 
-void	check_print(void)
+static void	kernel_program(void)
 {
-	t_token	*tmp;
+	lexer();
+	parser();
 
-	tmp = g_data.tokens;
-	printf("input:\n%s\n", g_data.input);
-	if (!tmp)
-		printf("NULL\n");
-	while (tmp)
-	{
-		printf("token: type = %d	{%s}\n", tmp->type, tmp->content);
-		tmp = tmp->next;
-	}
+	check_print(); // check
+	
+	clear_data_loop();
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -65,6 +61,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		g_data.input = ft_readline();
+		// if (!g_data.input)  //
+		// 	g_data.input = ft_strdup("cat << STOP > file1");
 		if (!g_data.input)
 			exit (0);
 		if (!*g_data.input || !ft_strcmp(g_data.input, "\n"))
@@ -75,12 +73,12 @@ int	main(int argc, char **argv, char **envp)
 		if (!ft_strcmp(g_data.input, "exit"))
 		{
 			free (g_data.input);
+			g_data.input = NULL;
 			break ;
 		}
-		lexer();
-		parser();
-		check_print();
-		clear_g_data();
+		kernel_program();
+		g_data.input = ft_strdup("exit");
 	}
+	clear_g_data();
 	return (0);
 }

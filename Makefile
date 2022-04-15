@@ -19,11 +19,13 @@ SRCS_LIST	=	main.c \
 				lexer_2.c \
 				tokens.c \
 				open_variables.c \
-				parser.c \
+				parser_1.c \
+				parser_2.c \
 				cmds.c \
 				dicts.c \
 				clear_data.c \
-				utils.c
+				utils.c \
+				tmp_check.c
 SRCS		=	$(addprefix $(SRCS_DIR)/,$(SRCS_LIST))
 
 OBJS_DIR	=	objs

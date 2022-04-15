@@ -1,2 +1,14 @@
++++
 cat -n < file | grep word
+
++++
 cat -n < file | grep word   >>     file555
+
++++
+cat -n<       file| grep word>>     file555     file_exe     << >>  folen
+
+---
+echo     file"DQUOTES"'QUOTES'
+
+---
+echo     file"'DQUOTES'"'"QUOTES"'

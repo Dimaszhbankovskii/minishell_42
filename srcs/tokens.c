@@ -37,13 +37,16 @@ void	add_token(t_token **tokens, t_token *new)
 void	free_tokens(void)
 {
 	t_token	*tmp;
+	t_token	*del;
 
-	tmp=g_data.tokens;
-	while (tmp)
+	del=g_data.tokens;
+	while (del)
 	{
-		free (tmp->content);
-		tmp = tmp->next;
+		free (del->content);
+		tmp = del->next;
+		free (del);
+		del = tmp;
 	}
-	free (g_data.tokens);
+	// free (g_data.tokens);
 	g_data.tokens = NULL;
 }

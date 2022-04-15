@@ -60,7 +60,7 @@ static void	token_word_quotes_dquotes(int *i)
 static void	token_separator(int *i)
 {
 	add_token(&g_data.tokens, new_token(ft_strdup(" "), SEPARATOR, i));
-	while (ft_strchr(" \t", *(g_data.input + *i)))
+	while (*(g_data.input + *i) && ft_strchr(" \t", *(g_data.input + *i)))
 		(*i)++;
 }
 
