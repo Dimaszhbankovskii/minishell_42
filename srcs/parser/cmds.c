@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 t_cmd	*new_cmd(void)
 {
@@ -59,4 +59,19 @@ void	free_cmd(void)
 		free (g_data.cmds);
 		g_data.cmds = NULL;
 	}
+}
+
+int	count_cmds(t_cmd *cmds)
+{
+	t_cmd	*tmp;
+	int		i;
+
+	tmp = cmds;
+	i = 0;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
 }

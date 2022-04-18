@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void	init_cmd(t_token *token)
 {
@@ -51,13 +51,13 @@ static t_token	*cmd_get_redirect(t_token *token)
 
 	tmp = find_token_path_redirect(token);
 	if (token->type == RDR_IN)
-		add_dict(&last_cmd(g_data.cmds)->infd, new_dict("<", tmp));
+		add_dict(&last_cmd(g_data.cmds)->infd, new_dict(RDR_IN, tmp));
 	else if (token->type == RDR_OUT)
-		add_dict(&last_cmd(g_data.cmds)->outfd, new_dict(">", tmp));
+		add_dict(&last_cmd(g_data.cmds)->outfd, new_dict(RDR_OUT, tmp));
 	else if (token->type == RDR_SRC)
-		add_dict(&last_cmd(g_data.cmds)->infd, new_dict("<<", tmp));
+		add_dict(&last_cmd(g_data.cmds)->infd, new_dict(RDR_SRC, tmp));
 	else if (token->type == RDR_APD)
-		add_dict(&last_cmd(g_data.cmds)->outfd, new_dict(">>", tmp));
+		add_dict(&last_cmd(g_data.cmds)->outfd, new_dict(RDR_APD, tmp));
 	return (tmp);
 }
 

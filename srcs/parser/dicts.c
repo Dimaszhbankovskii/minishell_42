@@ -1,15 +1,13 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-t_dict	*new_dict(char *key, t_token *token)
+t_dict	*new_dict(int key, t_token *token)
 {
 	t_dict	*new;
 
 	new = (t_dict *)malloc(sizeof(t_dict));
 	if (!new)
 		exit (1); // manage error
-	new->key = ft_strdup(key);
-	if (!new)
-		exit (1); // manage error
+	new->key = key;	
 	if (token && token->type != PIPE)
 	{
 		new->value = ft_strdup(token->content);
@@ -54,8 +52,6 @@ t_dict	*free_dict(t_dict *dict)
 	{
 	while (tmp)
 		{
-			if (tmp->key)
-				free (tmp->key);
 			if (tmp->value)
 				free (tmp->value);
 			tmp = tmp->next;

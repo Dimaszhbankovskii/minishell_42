@@ -25,7 +25,7 @@ void	check_print(void)
 		printf("g_data.cmd = NULL\n");
 	while (cmd)
 	{
-		printf("cmd %d:\n", cmd->id);
+		printf("cmd %s:\n", cmd->id);
 		printf("args: ");
 		i = 0;
 		while (cmd->args && cmd->args[i])
@@ -40,7 +40,7 @@ void	check_print(void)
 			printf("infd: ");
 			while (tmp)
 			{
-				printf("{'%s'; ", tmp->key);
+				printf("{'%d'; ", tmp->key);
 				if (tmp->value)
 					printf("'%s'} ", tmp->value);
 				else
@@ -57,7 +57,7 @@ void	check_print(void)
 			printf("outfd: ");
 			while (tmp)
 			{
-				printf("{'%s'; ", tmp->key);
+				printf("{'%d'; ",tmp->key);
 				if (tmp->value)
 					printf("'%s'} ", tmp->value);
 				else

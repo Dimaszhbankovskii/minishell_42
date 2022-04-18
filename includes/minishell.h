@@ -7,6 +7,7 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
 # include "../libft/libft.h"
 
 # define SEPARATOR 1 // ' ', '\t'
@@ -19,6 +20,14 @@
 # define RDR_APD 8 // >>
 # define PIPE 9 // |
 
+typedef struct s_pipex
+{
+	int	i;
+	int	num;
+	int	used_pipes;
+	int	pipes[2][2];
+}				t_pipex;
+
 typedef struct s_token
 {
 	char			*content;
@@ -28,14 +37,15 @@ typedef struct s_token
 
 typedef struct s_dict
 {
-	char			*key;
+	int				key;
+	// char			*key;
 	char			*value;
 	struct s_dict	*next;
 }				t_dict;
 
 typedef struct s_cmd
 {
-	int				id;
+	char			*id;
 	char			**args;
 	int				count;
 	t_dict			*infd;
@@ -71,10 +81,17 @@ t_cmd	*last_cmd(t_cmd *cmds);
 void	add_cmd(t_cmd **cmds, t_cmd *new);
 void	free_cmd(void);
 
-t_dict	*new_dict(char *key, t_token *token);
+t_dict	*new_dict(int key, t_token *token);
 t_dict	*last_dict(t_dict *dict);
 void	add_dict(t_dict **dict, t_dict *new);
 t_dict	*free_dict(t_dict *dict);
+int		count_cmds(t_cmd *cmds);
+
+void	executor(t_cmd *cmds);
+void	handling_heredoc(t_cmd *cmds);
+void	child_process(t_pipex *pipex, t_cmd *cmd);
+void	redirect_input(t_cmd *cmd);
+void	redirect_output(t_cmd *cmd);
 
 void	clear_data_loop(void);
 void	clear_g_data(void);
@@ -84,6 +101,7 @@ char	**malloc_two_array_char(int len);
 void	free_two_array_char(char **array);
 void	add_back_elem_two_array_char(char **array, char *elem, int len);
 
+void	error_mess(char *mess, int code);
 
 // delete
 void	check_print(void);

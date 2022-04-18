@@ -46,6 +46,7 @@ static void	kernel_program(void)
 {
 	lexer();
 	parser();
+	// executor(g_data.cmds);
 
 	check_print(); // check
 	

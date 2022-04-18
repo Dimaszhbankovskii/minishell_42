@@ -12,25 +12,39 @@ HEADER		=	minishell.h
 
 LIBFT		=	./libft/libft.a
 
-SRCS_DIR		=	srcs
+SRCS_DIR			=	srcs
+SRCS_DIR_PARSER		=	srcs/parser
+SRCS_DIR_EXECUTOR	=	srcs/executor
 
 SRCS_LIST	=	main.c \
-				lexer_1.c \
-				lexer_2.c \
-				tokens.c \
-				open_variables.c \
-				parser_1.c \
-				parser_2.c \
-				cmds.c \
-				dicts.c \
 				clear_data.c \
 				utils.c \
-				tmp_check.c
+				tmp_check.c \
+				error_mess.c
 SRCS		=	$(addprefix $(SRCS_DIR)/,$(SRCS_LIST))
+
+SRCS_LIST_PARSER	=	lexer_1.c \
+						lexer_2.c \
+						tokens.c \
+						open_variables.c \
+						parser_1.c \
+						parser_2.c \
+						cmds.c \
+						dicts.c
+SRCS_PARSER			=	$(addprefix $(SRCS_DIR_PARSER)/,$(SRCS_LIST_PARSER))
+
+SRCS_LIST_EXECUTOR	=	executor.c \
+						heredoc.c
+SRCS_EXECUTOR		=	$(addprefix $(SRCS_DIR_EXECUTOR)/,$(SRCS_LIST_EXECUTOR))
+
+SRCS += $(SRCS_DIR_PARSER)
+SRCS += $(SRCS_EXECUTOR)
 
 OBJS_DIR	=	objs
 
-OBJS		=	$(addprefix $(OBJS_DIR)/,$(SRCS_LIST:.c=.o))
+OBJS			=	$(addprefix $(OBJS_DIR)/,$(SRCS_LIST:.c=.o))
+OBJS			+=	$(addprefix $(OBJS_DIR)/,$(SRCS_LIST_PARSER:.c=.o))
+OBJS			+=	$(addprefix $(OBJS_DIR)/,$(SRCS_LIST_EXECUTOR:.c=.o))
 
 NORMAL		=	\033[0m
 BOLD		=	\033[1m
@@ -48,9 +62,17 @@ all : $(OBJS_DIR) $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(READLINE) -L$(RL_LIB) -I$(RL_INCLUDE) $^ -o $@
-	@echo "$(GREEN)Project succesfully compiled"
+	@echo "$(GREEN)Project succesfully compiled$(NORMAL)"
 
 $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c $(INCLUDES)/$(HEADER) Makefile
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(RL_INCLUDE)
+	@echo "$(BLUE)Creating object file$(WHITE) --> $(notdir $@) --> $(GREEN)[Done]$(NORMAL)"
+
+$(OBJS_DIR)/%.o : $(SRCS_DIR)/parser/%.c $(INCLUDES)/$(HEADER) Makefile
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(RL_INCLUDE)
+	@echo "$(BLUE)Creating object file$(WHITE) --> $(notdir $@) --> $(GREEN)[Done]$(NORMAL)"
+
+$(OBJS_DIR)/%.o : $(SRCS_DIR)/executor/%.c $(INCLUDES)/$(HEADER) Makefile
 	@$(CC) $(CFLAGS) -c $< -o $@ -I$(RL_INCLUDE)
 	@echo "$(BLUE)Creating object file$(WHITE) --> $(notdir $@) --> $(GREEN)[Done]$(NORMAL)"
 

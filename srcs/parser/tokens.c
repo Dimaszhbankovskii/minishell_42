@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 t_token	*new_token(char *str, int type, int *index)
 {

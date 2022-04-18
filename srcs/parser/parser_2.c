@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	init_id_cmd(void)
 {
@@ -9,7 +9,9 @@ void	init_id_cmd(void)
 	tmp = g_data.cmds;
 	while (tmp)
 	{
-		tmp->id = id;
+		tmp->id = ft_itoa(id);
+		if (!tmp->id)
+			exit (1);
 		id++;
 		tmp = tmp->next;
 	}
