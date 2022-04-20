@@ -7,7 +7,7 @@ t_cmd	*new_cmd(void)
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!cmd)
 		exit (1); // manage error
-	cmd->id = 0;
+	cmd->id = NULL;
 	cmd->args = NULL;
 	cmd->count = 0;
 	cmd->infd = NULL;
@@ -49,6 +49,8 @@ void	free_cmd(void)
 	{
 		while (tmp)
 		{
+			if (tmp->id)
+				free (tmp->id);
 			free_two_array_char(tmp->args);
 			tmp->infd=free_dict(tmp->infd);
 			tmp->outfd=free_dict(tmp->outfd);

@@ -42,11 +42,10 @@ void	free_tokens(void)
 	del=g_data.tokens;
 	while (del)
 	{
-		free (del->content);
 		tmp = del->next;
+		free (del->content);
 		free (del);
 		del = tmp;
 	}
-	// free (g_data.tokens);
 	g_data.tokens = NULL;
 }

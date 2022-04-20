@@ -12,9 +12,9 @@ void	redirect_input(t_cmd *cmd)
 		if (fd)
 			close(fd);
 		if (tmp->key == RDR_IN)
-			fd = open(tmp->value, O_RDONLY | 0777);
+			fd = open(tmp->value, O_RDONLY | 0644);
 		else if (tmp->key == RDR_SRC)
-			fd = open(tmp->value, O_RDONLY);
+			fd = open(cmd->tmpname, O_RDONLY);
 		if (fd < 0)
 			error_mess(tmp->value, errno);
 		tmp = tmp->next;

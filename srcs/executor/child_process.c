@@ -21,10 +21,19 @@ static void	define_input_output(t_pipex *pipex, t_cmd *cmd)
 
 void	child_process(t_pipex *pipex, t_cmd *cmd)
 {
-	char	*tmp_cmd[] = {"/bin/cat", NULL};
+	// char	*tmp_cmd[] = {"/bin/cat", NULL};
+	pid_t	child_bin;
 
-	(void)cmd;
-	define_input_output(pipex, cmd);
-	execve(tmp_cmd[0], tmp_cmd, g_data.envp);	// execute_cmd();
+	define_input_output(pipex, cmd); // перенаправление вводов и выводов
+	
+	// попытка выполнить builtin
+
+	// либо бинарник системы или свой
+	child_bin = fork();
+	if (!child_bin)
+		child_process_bin(pipex, cmd);
+	waitpid(-1, NULL, 0);
+	// execve(tmp_cmd[0], tmp_cmd, g_data.envp);	// execute_cmd();
+	
 	// save_envp();
 }

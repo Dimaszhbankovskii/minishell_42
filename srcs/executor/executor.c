@@ -45,7 +45,7 @@ void	executor(t_cmd *cmds)
 		pipex.used_pipes = 1 - pipex.used_pipes;
 		pipex.i++;
 		cmd = cmd->next;
-		// обновление окружения
+		// update_envp(); обновление окружения
 	}
 	wait_child_process(pipex);
 }

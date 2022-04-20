@@ -8,7 +8,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
-# include <wait.h>
 # include "../libft/libft.h"
 
 # define SEPARATOR 1 // ' ', '\t'
@@ -40,7 +39,6 @@ typedef struct s_token
 typedef struct s_dict
 {
 	int				key;
-	// char			*key;
 	char			*value;
 	struct s_dict	*next;
 }				t_dict;
@@ -94,6 +92,8 @@ void	handling_heredoc(t_cmd *cmds);
 void	child_process(t_pipex *pipex, t_cmd *cmd);
 void	redirect_input(t_cmd *cmd);
 void	redirect_output(t_cmd *cmd);
+
+void	child_process_bin(t_pipex *pipex, t_cmd *cmd);
 
 void	clear_data_loop(void);
 void	clear_g_data(void);

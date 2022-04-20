@@ -46,17 +46,19 @@ void	add_dict(t_dict **dict, t_dict *new)
 t_dict	*free_dict(t_dict *dict)
 {
 	t_dict	*tmp;
+	t_dict	*del;
 
-	tmp = dict;
-	if (tmp)
+	del = dict;
+	if (del)
 	{
-	while (tmp)
+		while (del)
 		{
-			if (tmp->value)
-				free (tmp->value);
-			tmp = tmp->next;
+			tmp = del->next;
+			if (del->value)
+				free (del->value);
+			free (del);
+			del = tmp;
 		}
-		free (dict);
 	}
 	return (NULL);
 }
