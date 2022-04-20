@@ -34,7 +34,9 @@ SRCS_LIST_PARSER	=	lexer_1.c \
 SRCS_PARSER			=	$(addprefix $(SRCS_DIR_PARSER)/,$(SRCS_LIST_PARSER))
 
 SRCS_LIST_EXECUTOR	=	executor.c \
-						heredoc.c
+						heredoc.c \
+						redirections.c \
+						child_process.c
 SRCS_EXECUTOR		=	$(addprefix $(SRCS_DIR_EXECUTOR)/,$(SRCS_LIST_EXECUTOR))
 
 SRCS += $(SRCS_DIR_PARSER)

@@ -21,7 +21,10 @@ static void	define_input_output(t_pipex *pipex, t_cmd *cmd)
 
 void	child_process(t_pipex *pipex, t_cmd *cmd)
 {
+	char	*tmp_cmd[] = {"/bin/cat", NULL};
+
+	(void)cmd;
 	define_input_output(pipex, cmd);
-	// execute_cmd();
+	execve(tmp_cmd[0], tmp_cmd, g_data.envp);	// execute_cmd();
 	// save_envp();
 }

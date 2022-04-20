@@ -8,6 +8,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
+# include <wait.h>
 # include "../libft/libft.h"
 
 # define SEPARATOR 1 // ' ', '\t'
@@ -22,10 +23,11 @@
 
 typedef struct s_pipex
 {
-	int	i;
-	int	num;
-	int	used_pipes;
-	int	pipes[2][2];
+	int		i;
+	int		num;
+	int		used_pipes;
+	int		pipes[2][2];
+	pid_t	pid;
 }				t_pipex;
 
 typedef struct s_token

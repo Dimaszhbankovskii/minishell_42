@@ -46,7 +46,7 @@ static void	kernel_program(void)
 {
 	lexer();
 	parser();
-	// executor(g_data.cmds);
+	executor(g_data.cmds);
 
 	check_print(); // check
 	
@@ -63,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		g_data.input = ft_readline();
 		// if (!g_data.input)  //
-		// 	g_data.input = ft_strdup("cat << STOP > file1");
+		// 	g_data.input = ft_strdup("cat < file1 | cat > file_out");
 		if (!g_data.input)
 			exit (0);
 		if (!*g_data.input || !ft_strcmp(g_data.input, "\n"))
