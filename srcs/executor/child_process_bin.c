@@ -1,56 +1,59 @@
 #include "../../includes/minishell.h"
 
-static char	*search_paths(char **paths, char *cmd)
+static char	*search_paths_in_envp(char **paths, char *cmd)
 {
 	int		i;
 	char	*tmp;
 	char	*filename;
-	char *path;
 
-
-	//absolute path
-	if (!access(cmd, X_OK)) {
-		//printf("%s\n",cmd);
-		return (ft_strdup(cmd));
-	}
-
-
-	//relative path
-	path= getcwd(NULL, 0);
-	if (!path)
-		exit(1); // malloc error
-	filename = ft_strjoin(path, cmd);
-	if (!access(filename, X_OK)) {
-		//printf("%s\n",filename);
-		return (filename);
-	}
-
-
-	//envp path
 	i = 0;
-	while (paths[i])
+	while (paths && paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		if (!tmp)
-			exit(1);
+			return (NULL);
 		filename = ft_strjoin(tmp, cmd);
 		if (!filename)
 		{
 			free (tmp);
-			exit(1);
+			return (NULL);
 		}
-		free(tmp);
-		if (!access(filename, X_OK)) {
-			//printf("%s\n",filename);
+		free (tmp);
+		if (!access(filename, X_OK))
 			return (filename);
-		}
-		i++;
 		free(filename);
+		i++;
 	}
 	return (NULL);
 }
 
-static char	**find_str(char **array, char *str)
+static char	*search_paths(char **paths, char *cmd)
+{
+	char	*filename;
+	char	*path;
+
+	if (!access(cmd, X_OK))
+		return (ft_strdup(cmd));
+	path= getcwd(NULL, 0);
+	if (!path)
+		return (NULL);
+	filename = ft_strjoin(path, cmd);
+	if (!filename)
+	{
+		free (path);
+		return (NULL);
+	}
+	if (!access(filename, X_OK))
+	{
+		free (path);
+		return (filename);
+	}
+	free (path);
+	free (filename);
+	return (search_paths_in_envp(paths, cmd));
+}
+
+static char	*find_str(char **array, char *str)
 {
 	int	i;
 
@@ -58,48 +61,63 @@ static char	**find_str(char **array, char *str)
 	while (array && array[i])
 	{
 		if (!ft_strncmp(array[i], str, ft_strlen(str)))
-			return (&array[i]);
+			return (array[i]);
 		i++;
 	}
 	return (NULL);
 }
 
-static char	**parsing_paths(void)
+static char	**parsing_paths(char **envp)
 {
 	char	*tmp1;
 	char	*tmp2;
 	char	**paths;
 
-	tmp1 = *find_str(g_data.envp, "PATH=");
+	tmp1 = find_str(envp, "PATH=");
 	if (!tmp1)
-		exit(1);
+		return (NULL);
 	tmp2 = ft_strdup(tmp1 + ft_strlen("PATH="));
 	if (!tmp2)
-		exit(1);
+		return (NULL);
 	paths = ft_split(tmp2, ':');
 	if (!paths)
 	{
 		free(tmp2);
-		exit(1);
+		return (NULL);
 	}
 	free (tmp2);
 	return (paths);
 }
 
-void child_process_bin(t_pipex *pipex, t_cmd *cmd)
+static void child_process_binary(t_cmd *cmd, char **envp)
 {
+	char	**paths_envp;
 	char	*path_cmd;
-	char	**path_envp;
 	
-	(void)pipex;
-	path_envp = parsing_paths();
-	path_cmd = search_paths(path_envp, cmd->args[0]);
+	paths_envp = parsing_paths(envp);
+	if (!paths_envp)
+		exit(warning("Error: parsing ENVP PATH\n", 1));
+	path_cmd = search_paths(paths_envp, cmd->args[0]);
 	if (!path_cmd)
 	{
-		printf("no cmd\n");
-		exit(1);
+		free_two_array_char(paths_envp);
+		exit(warning("Error: binary file not exist\n", 1));
 	}
 	execve(path_cmd, cmd->args, g_data.envp);
-	// printf("no execve cmd\n");
-	exit (1);
+	free_two_array_char(paths_envp);
+	free (path_cmd);
+	error_mess("execve:", 1);
+}
+
+int	execute_binary(t_cmd *cmd)
+{
+	pid_t	child;
+
+	child = fork();
+	if (child < 0)
+		return (1);
+	if (!child)
+		child_process_binary(cmd, g_data.envp);
+	waitpid(-1, NULL, 0);
+	return (0);
 }

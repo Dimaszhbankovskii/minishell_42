@@ -43,13 +43,12 @@ void	init_g_data(char **envp)
 }
 
 static void	kernel_program(void)
-{
+{	
 	lexer();
 	parser();
-	// executor(g_data.cmds);
-	
-	printf("--------------- check ----------------\n");
-	check_print(); // check
+	executor(g_data.cmds);	
+	// printf("--------------- check ----------------\n");
+	// check_print(); // check
 	clear_data_loop();
 }
 

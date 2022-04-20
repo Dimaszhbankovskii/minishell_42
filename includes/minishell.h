@@ -93,7 +93,7 @@ void	child_process(t_pipex *pipex, t_cmd *cmd);
 void	redirect_input(t_cmd *cmd);
 void	redirect_output(t_cmd *cmd);
 
-void	child_process_bin(t_pipex *pipex, t_cmd *cmd);
+int		execute_binary(t_cmd *cmd);
 
 void	clear_data_loop(void);
 void	clear_g_data(void);
@@ -104,7 +104,7 @@ void	free_two_array_char(char **array);
 void	add_back_elem_two_array_char(char **array, char *elem, int len);
 
 void	error_mess(char *mess, int code);
-
+int		warning(char *mess, int code);
 // delete
 void	check_print(void);
 

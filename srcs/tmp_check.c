@@ -15,7 +15,7 @@ void	check_print(void)
 		printf("g_data.token = NULL\n");
 	while (token)
 	{
-		printf("g_data.token: type = %d \t {%s}\n", token->type, token->content);
+		printf("g_data.token: type = %d \t {%s} {%d}\n", token->type, token->content, token->content[0]);
 		token = token->next;
 	}
 
