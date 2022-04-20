@@ -33,6 +33,7 @@ void	child_process(t_pipex *pipex, t_cmd *cmd)
 	if (!child_bin)
 		child_process_bin(pipex, cmd);
 	waitpid(-1, NULL, 0);
+	
 	// execve(tmp_cmd[0], tmp_cmd, g_data.envp);	// execute_cmd();
 	
 	// save_envp();

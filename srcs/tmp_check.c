@@ -71,4 +71,10 @@ void	check_print(void)
 		cmd = cmd->next;
 	}
 	printf("--------------------------------------------------------\n");
+	// printf("g_data.input=%p\n", g_data.input);
+	// printf("g_data.tokens=%p\n", g_data.tokens);
+	// printf("g_data.cmds=%p\n", g_data.cmds);
+	// printf("g_data.cmds=%p\n", g_data.cmds->infd);
+	// printf("g_data.cmds=%p\n", g_data.cmds->outfd);
+	// printf("g_data.envp=%p\n", g_data.envp);
 }

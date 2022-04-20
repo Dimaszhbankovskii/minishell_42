@@ -100,6 +100,6 @@ void child_process_bin(t_pipex *pipex, t_cmd *cmd)
 		exit(1);
 	}
 	execve(path_cmd, cmd->args, g_data.envp);
-	printf("no execve cmd\n");
+	// printf("no execve cmd\n");
 	exit (1);
 }

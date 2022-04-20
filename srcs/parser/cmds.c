@@ -43,22 +43,24 @@ void	add_cmd(t_cmd **cmds, t_cmd *new)
 void	free_cmd(void)
 {
 	t_cmd	*tmp;
+	t_cmd	*del;
 
-	tmp = g_data.cmds;
-	if (tmp)
+	del = g_data.cmds;
+	if (del)
 	{
-		while (tmp)
+		while (del)
 		{
-			if (tmp->id)
-				free (tmp->id);
-			free_two_array_char(tmp->args);
-			tmp->infd=free_dict(tmp->infd);
-			tmp->outfd=free_dict(tmp->outfd);
-			if (tmp->tmpname)
-				free(tmp->tmpname);
-			tmp = tmp->next;
+			tmp = del->next;
+			if (del->id)
+				free (del->id);
+			free_two_array_char(del->args);
+			del->infd=free_dict(del->infd);
+			del->outfd=free_dict(del->outfd);
+			if (del->tmpname)
+				free(del->tmpname);
+			free (del);
+			del = tmp;
 		}
-		free (g_data.cmds);
 		g_data.cmds = NULL;
 	}
 }
