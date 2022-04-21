@@ -53,20 +53,6 @@ static char	*search_paths(char **paths, char *cmd)
 	return (search_paths_in_envp(paths, cmd));
 }
 
-static char	*find_str(char **array, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (array && array[i])
-	{
-		if (!ft_strncmp(array[i], str, ft_strlen(str)))
-			return (array[i]);
-		i++;
-	}
-	return (NULL);
-}
-
 static char	**parsing_paths(char **envp)
 {
 	char	*tmp1;
@@ -89,24 +75,26 @@ static char	**parsing_paths(char **envp)
 	return (paths);
 }
 
-static void child_process_binary(t_cmd *cmd, char **envp)
+static void	child_process_binary(t_cmd *cmd, char **envp)
 {
 	char	**paths_envp;
 	char	*path_cmd;
 	
 	paths_envp = parsing_paths(envp);
 	if (!paths_envp)
-		exit(warning("Error: parsing ENVP PATH\n", 1));
+		exit(warning("Error: parsing ENVP PATH\n", EXIT_FAILURE));
+	if (!cmd->args[0]) // check ( |   ls -l) (ls -l |    ) два случая надо ограничить
+		exit(warning("Error: binary file not exist\n", EXIT_FAILURE)); // ???
 	path_cmd = search_paths(paths_envp, cmd->args[0]);
 	if (!path_cmd)
 	{
 		free_two_array_char(paths_envp);
-		exit(warning("Error: binary file not exist\n", 1));
+		exit(warning("Error: binary file not exist\n", 127));
 	}
 	execve(path_cmd, cmd->args, g_data.envp);
 	free_two_array_char(paths_envp);
 	free (path_cmd);
-	error_mess("execve:", 1);
+	error_mess("execve", errno);
 }
 
 int	execute_binary(t_cmd *cmd)
@@ -118,6 +106,7 @@ int	execute_binary(t_cmd *cmd)
 		return (1);
 	if (!child)
 		child_process_binary(cmd, g_data.envp);
-	waitpid(-1, NULL, 0);
+	else
+		waitpid(child, &g_data.status, 0);	
 	return (0);
 }

@@ -10,6 +10,8 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 
+# define FT_WEXITSTATUS(x) ((x >> 8) & 0x000000ff)
+
 # define SEPARATOR 1 // ' ', '\t'
 # define WORD 2
 # define QUOTES 3 // ''
@@ -19,6 +21,11 @@
 # define RDR_SRC 7 // <<
 # define RDR_APD 8 // >>
 # define PIPE 9 // |
+
+# define BUILTIN_ECHO 1
+# define BUILTIN_PWD 2
+# define BUILTIN_ENV 3
+
 
 typedef struct s_pipex
 {
@@ -93,6 +100,10 @@ void	child_process(t_pipex *pipex, t_cmd *cmd);
 void	redirect_input(t_cmd *cmd);
 void	redirect_output(t_cmd *cmd);
 
+void	execute_echo(t_cmd *cmd);
+void	execute_pwd(void);
+void 	execute_env(void);
+
 int		execute_binary(t_cmd *cmd);
 
 void	clear_data_loop(void);
@@ -102,6 +113,7 @@ int		max(int a, int b);
 char	**malloc_two_array_char(int len);
 void	free_two_array_char(char **array);
 void	add_back_elem_two_array_char(char **array, char *elem, int len);
+char	*find_str(char **array, char *str);
 
 void	error_mess(char *mess, int code);
 int		warning(char *mess, int code);

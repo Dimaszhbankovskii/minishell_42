@@ -43,3 +43,18 @@ void	add_back_elem_two_array_char(char **array, char *elem, int len)
 	if (!array[i])
 		exit (1); // manager error
 }
+
+char	*find_str(char **array, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (array && array[i])
+	{
+		if (!ft_strncmp(array[i], str, ft_strlen(str)))
+			return (array[i]);
+		i++;
+	}
+	return (NULL);
+}
+

@@ -37,7 +37,8 @@ SRCS_LIST_EXECUTOR	=	executor.c \
 						heredoc.c \
 						redirections.c \
 						child_process.c \
-						child_process_bin.c
+						builtins.c \
+						binary_command.c
 SRCS_EXECUTOR		=	$(addprefix $(SRCS_DIR_EXECUTOR)/,$(SRCS_LIST_EXECUTOR))
 
 SRCS += $(SRCS_DIR_PARSER)
