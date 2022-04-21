@@ -107,6 +107,7 @@ int	execute_binary(t_cmd *cmd)
 	if (!child)
 		child_process_binary(cmd, g_data.envp);
 	else
-		waitpid(child, &g_data.status, 0);	
+		waitpid(child, &g_data.status, 0);
+	// сделать макрос
 	return (0);
 }

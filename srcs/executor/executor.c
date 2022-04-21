@@ -33,6 +33,7 @@ void	executor(t_cmd *cmds)
 	cmd = cmds;
 	while (pipex.i < pipex.num)
 	{
+		printf("check parent i = %d\n", pipex.i);
 		if (pipe(pipex.pipes[pipex.used_pipes]) < 0)
 			exit(1); // error manager
 		pipex.pid = fork();
@@ -45,7 +46,8 @@ void	executor(t_cmd *cmds)
 		pipex.used_pipes = 1 - pipex.used_pipes;
 		pipex.i++;
 		cmd = cmd->next;
-		// update_envp(); обновление окружения
+		// get_envp(); //обновление окружения
 	}
+	close(pipex.pipes[1- pipex.used_pipes][0]);
 	wait_child_process(pipex);
 }

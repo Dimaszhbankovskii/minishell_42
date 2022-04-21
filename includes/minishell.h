@@ -25,6 +25,7 @@
 # define BUILTIN_ECHO 1
 # define BUILTIN_PWD 2
 # define BUILTIN_ENV 3
+# define BUILTIN_UNSET 4
 
 
 typedef struct s_pipex
@@ -63,6 +64,7 @@ typedef struct s_cmd
 
 typedef struct s_main
 {
+	int		pipes[3][2]; // 0 - char *envp, 1 - count, 2 - status
 	char	*input;
 	char	**envp;
 	int		status;
@@ -103,6 +105,10 @@ void	redirect_output(t_cmd *cmd);
 void	execute_echo(t_cmd *cmd);
 void	execute_pwd(void);
 void 	execute_env(void);
+char	**execute_unset(char **envp, char **args);
+
+void	save_envp(void);
+void	get_envp(void);
 
 int		execute_binary(t_cmd *cmd);
 
@@ -114,6 +120,7 @@ char	**malloc_two_array_char(int len);
 void	free_two_array_char(char **array);
 void	add_back_elem_two_array_char(char **array, char *elem, int len);
 char	*find_str(char **array, char *str);
+int		size_two_array_char(char **array);
 
 void	error_mess(char *mess, int code);
 int		warning(char *mess, int code);

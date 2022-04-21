@@ -38,6 +38,8 @@ SRCS_LIST_EXECUTOR	=	executor.c \
 						redirections.c \
 						child_process.c \
 						builtins.c \
+						builtin_unset.c \
+						envp.c \
 						binary_command.c
 SRCS_EXECUTOR		=	$(addprefix $(SRCS_DIR_EXECUTOR)/,$(SRCS_LIST_EXECUTOR))
 

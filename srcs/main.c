@@ -33,10 +33,14 @@ char	**new_envp(char **envp)
 	return (new_envp);
 }
 
-void	init_g_data(char **envp)
+void	init_g_data(void)
 {
-	g_data.envp = new_envp(envp);
-	g_data.status = 0;
+	if (pipe(g_data.pipes[0]) < 0)
+		exit (1);
+	if (pipe(g_data.pipes[1]) < 0)
+		exit (1);
+	if (pipe(g_data.pipes[2]) < 0)
+		exit (1);
 	g_data.input = NULL;
 	g_data.tokens = NULL;
 	g_data.cmds = NULL;
@@ -57,9 +61,11 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		exit (1); // error num args
 	(void)argv;
-	init_g_data(envp);
+	g_data.envp = new_envp(envp);
+	g_data.status = 0;
 	while (1)
 	{
+		init_g_data();
 		g_data.input = ft_readline();
 		if (!g_data.input)
 			exit (0);

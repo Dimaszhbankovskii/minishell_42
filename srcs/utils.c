@@ -58,3 +58,12 @@ char	*find_str(char **array, char *str)
 	return (NULL);
 }
 
+int	size_two_array_char(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array && array[i])
+		i++;
+	return (i);
+}

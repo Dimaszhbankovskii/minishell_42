@@ -25,8 +25,10 @@ static void	execute_builtin(t_cmd *cmd, int type_builtin)
 		execute_echo(cmd);
 	else if (type_builtin == BUILTIN_PWD)
 		execute_pwd();
-	// else if (type_builtin == BUILTIN_ENV)
-	// 	execute_env(g_data.envp, cmd->args);
+	else if (type_builtin == BUILTIN_ENV)
+		execute_env();
+	else if (type_builtin == BUILTIN_UNSET)
+		g_data.envp=execute_unset(g_data.envp, cmd->args);
 }
 
 static int	define_builtin(t_cmd *cmd)
@@ -37,6 +39,8 @@ static int	define_builtin(t_cmd *cmd)
 		return (BUILTIN_PWD);
 	else if (!ft_strncmp(cmd->args[0], "env", ft_strlen(cmd->args[0])))
 		return (BUILTIN_ENV);
+	else if (!ft_strncmp(cmd->args[0], "unset", ft_strlen(cmd->args[0])))
+		return (BUILTIN_UNSET);
 	return (0);
 }
 
@@ -53,9 +57,7 @@ void	child_process(t_pipex *pipex, t_cmd *cmd)
 	// 	save_tmp_variable(cmd);
 	else
 		execute_binary(cmd);
-	// if (execute_binary(cmd))
-		// warning("Error: fork in execute binary\n", 1);
-	// printf("--------------check-------------------\n");
-	// save_envp
+	save_envp();
+	printf("check child\n");
 	exit (0);
 }
