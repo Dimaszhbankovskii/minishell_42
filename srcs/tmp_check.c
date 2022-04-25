@@ -37,9 +37,9 @@ void	print_list_env_tmp(t_env *head)
 	printf("------------------------------ g_data.env ------------------------------\n");
 	while (env)
 	{
-		// printf("key  -->%s\n", env->key);
-		// printf("value-->%s\n", env->value);
-		printf("%s\n", env->str);
+		printf("key  -->%s\n", env->key);
+		printf("value-->%s\n", env->value);
+		// printf("%s\n", env->str);
 		env = env->next;
 	}
 }
