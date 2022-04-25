@@ -1,0 +1,38 @@
+#ifndef EXECUTOR_H
+# define EXECUTOR_H
+
+# include "minishell.h"
+
+# define BUILTIN_ECHO 1
+# define BUILTIN_PWD 2
+# define BUILTIN_ENV 3
+# define BUILTIN_UNSET 4
+# define BUILTIN_EXPORT 5
+
+typedef struct s_pipex
+{
+	int		i;
+	int		num;
+	int		used_pipes;
+	int		pipes[2][2];
+	pid_t	pid;
+}				t_pipex;
+
+void	executor(t_cmd *cmds);
+void	handling_heredoc(t_cmd *cmds);
+void	child_process(t_pipex *pipex, t_cmd *cmd);
+void	redirect_input(t_cmd *cmd);
+void	redirect_output(t_cmd *cmd);
+
+void	execute_echo(t_cmd *cmd);
+void	execute_pwd(void);
+void 	execute_env(void);
+void	execute_unset(t_env **env, char **args);
+void	execute_export(char **envp, t_env *env, char **args);
+
+void	save_update_envp(void);
+void	get_update_envp(void);
+
+int		execute_binary(t_cmd *cmd);
+
+#endif

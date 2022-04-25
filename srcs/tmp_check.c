@@ -29,6 +29,21 @@ void	print_list_env(void)
 	}
 }
 
+void	print_list_env_tmp(t_env *head)
+{
+	t_env	*env;
+
+	env = head;
+	printf("------------------------------ g_data.env ------------------------------\n");
+	while (env)
+	{
+		// printf("key  -->%s\n", env->key);
+		// printf("value-->%s\n", env->value);
+		printf("%s\n", env->str);
+		env = env->next;
+	}
+}
+
 void	print_tokens(void)
 {
 	t_token	*token;

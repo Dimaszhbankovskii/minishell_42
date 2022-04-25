@@ -7,22 +7,6 @@ static void	unset_error_mess(char *name)
 	ft_putstr_fd(": not a valid identifier\n", STDERR_FILENO);
 }
 
-static int	check_valid_name_var(char *name)
-{
-	int	i;
-
-	if (name && ft_isdigit(name[0]))
-		return (0);
-	i = 0;
-	while (name && name[i])
-	{
-		if (!ft_isalnum(name[i]) && name[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 static int	check_valid_unset(char **args)
 {
 	int	i;

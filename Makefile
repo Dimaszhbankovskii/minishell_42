@@ -10,6 +10,9 @@ READLINE	=	-lreadline
 
 INCLUDES	=	includes
 HEADER		=	minishell.h
+PARSER_H	=	parser.h
+EXECUTOR_H	=	executor.h
+ERRORS_H	=	errors.h
 
 LIBFT		=	./libft/libft.a
 
@@ -18,6 +21,7 @@ SRCS_DIR_PARSER		=	srcs/parser
 SRCS_DIR_EXECUTOR	=	srcs/executor
 
 SRCS_LIST	=	main.c \
+				init_data.c \
 				clear_data.c \
 				utils.c \
 				tmp_check.c \
@@ -26,6 +30,7 @@ SRCS		=	$(addprefix $(SRCS_DIR)/,$(SRCS_LIST))
 
 SRCS_LIST_PARSER	=	env_1.c \
 						env_2.c \
+						env_3.c \
 						lexer_1.c \
 						lexer_2.c \
 						tokens.c \
@@ -42,6 +47,7 @@ SRCS_LIST_EXECUTOR	=	executor.c \
 						child_process.c \
 						builtins.c \
 						builtin_unset.c \
+						builtin_export.c \
 						update_envp.c \
 						binary_command.c
 SRCS_EXECUTOR		=	$(addprefix $(SRCS_DIR_EXECUTOR)/,$(SRCS_LIST_EXECUTOR))
@@ -73,15 +79,15 @@ $(NAME) : $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $^ -o $@ $(READLINE)
 	@echo "$(GREEN)Project succesfully compiled$(NORMAL)"
 
-$(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c $(INCLUDES)/$(HEADER) Makefile
+$(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c $(INCLUDES)/$(HEADER) $(INCLUDES)/$(PARSER_H) $(INCLUDES)/$(EXECUTOR_H) $(INCLUDES)/$(ERRORS_H) Makefile
 	@$(CC) $(CFLAGS) -c $< -o $@ $(READLINE)
 	@echo "$(BLUE)Creating object file$(WHITE) --> $(notdir $@) --> $(GREEN)[Done]$(NORMAL)"
 
-$(OBJS_DIR)/%.o : $(SRCS_DIR)/parser/%.c $(INCLUDES)/$(HEADER) Makefile
+$(OBJS_DIR)/%.o : $(SRCS_DIR)/parser/%.c $(INCLUDES)/$(HEADER) $(INCLUDES)/$(PARSER_H) $(INCLUDES)/$(EXECUTOR_H) $(INCLUDES)/$(ERRORS_H) Makefile
 	@$(CC) $(CFLAGS) -c $< -o $@ $(READLINE)
 	@echo "$(BLUE)Creating object file$(WHITE) --> $(notdir $@) --> $(GREEN)[Done]$(NORMAL)"
 
-$(OBJS_DIR)/%.o : $(SRCS_DIR)/executor/%.c $(INCLUDES)/$(HEADER) Makefile
+$(OBJS_DIR)/%.o : $(SRCS_DIR)/executor/%.c $(INCLUDES)/$(HEADER) $(INCLUDES)/$(PARSER_H) $(INCLUDES)/$(EXECUTOR_H) $(INCLUDES)/$(ERRORS_H) Makefile
 	@$(CC) $(CFLAGS) -c $< -o $@ $(READLINE)
 	@echo "$(BLUE)Creating object file$(WHITE) --> $(notdir $@) --> $(GREEN)[Done]$(NORMAL)"
 

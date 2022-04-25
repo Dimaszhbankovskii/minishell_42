@@ -29,18 +29,25 @@ static void	execute_builtin(t_cmd *cmd, int type_builtin)
 		execute_env();
 	else if (type_builtin == BUILTIN_UNSET)
 		execute_unset(&g_data.env, cmd->args);
+	else if (type_builtin == BUILTIN_EXPORT)
+		execute_export(g_data.envp, g_data.env, cmd->args);
 }
 
 static int	define_builtin(t_cmd *cmd)
 {
-	if (!ft_strncmp(cmd->args[0], "echo", ft_strlen(cmd->args[0])))
-		return (BUILTIN_ECHO);
-	else if (!ft_strncmp(cmd->args[0], "pwd", ft_strlen(cmd->args[0])))
-		return (BUILTIN_PWD);
-	else if (!ft_strncmp(cmd->args[0], "env", ft_strlen(cmd->args[0])))
-		return (BUILTIN_ENV);
-	else if (!ft_strncmp(cmd->args[0], "unset", ft_strlen(cmd->args[0])))
-		return (BUILTIN_UNSET);
+	if (cmd->args)
+	{
+		if (!ft_strcmp(cmd->args[0], "echo"))
+			return (BUILTIN_ECHO);
+		else if (!ft_strcmp(cmd->args[0], "pwd"))
+			return (BUILTIN_PWD);
+		else if (!ft_strcmp(cmd->args[0], "env"))
+			return (BUILTIN_ENV);
+		else if (!ft_strcmp(cmd->args[0], "unset"))
+			return (BUILTIN_UNSET);
+		else if (!ft_strcmp(cmd->args[0], "export"))
+			return (BUILTIN_EXPORT);
+	}
 	return (0);
 }
 
