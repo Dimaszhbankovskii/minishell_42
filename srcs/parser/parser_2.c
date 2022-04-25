@@ -11,7 +11,7 @@ void	init_id_cmd(void)
 	{
 		tmp->id = ft_itoa(id);
 		if (!tmp->id)
-			exit (1);
+			end_program(ERROR_INIT_ID_CMD, 1, END1);
 		id++;
 		tmp = tmp->next;
 	}

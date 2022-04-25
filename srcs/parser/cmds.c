@@ -6,7 +6,7 @@ t_cmd	*new_cmd(void)
 
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!cmd)
-		exit (1); // manage error
+		end_program(ERROR_MALLOC_CMD, 1, END1);
 	cmd->id = NULL;
 	cmd->args = NULL;
 	cmd->count = 0;

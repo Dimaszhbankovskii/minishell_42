@@ -33,12 +33,11 @@ void	executor(t_cmd *cmds)
 	cmd = cmds;
 	while (pipex.i < pipex.num)
 	{
-		printf("check parent i = %d\n", pipex.i);
 		if (pipe(pipex.pipes[pipex.used_pipes]) < 0)
-			exit(1); // error manager
+			end_program(ERROR_INIT_PIPE_EXECUTOR, errno, END2);
 		pipex.pid = fork();
 		if (pipex.pid < 0)
-			exit(1);
+			end_program(ERROR_FORK, errno, END2);
 		if (!pipex.pid)
 			child_process(&pipex, cmd);
 		close(pipex.pipes[1- pipex.used_pipes][0]);
@@ -46,7 +45,7 @@ void	executor(t_cmd *cmds)
 		pipex.used_pipes = 1 - pipex.used_pipes;
 		pipex.i++;
 		cmd = cmd->next;
-		// get_envp(); //обновление окружения
+		get_update_envp(); //обновление окружения
 	}
 	close(pipex.pipes[1- pipex.used_pipes][0]);
 	wait_child_process(pipex);

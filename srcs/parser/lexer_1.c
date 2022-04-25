@@ -9,7 +9,7 @@ static char	*word_token(int *index)
 	content = g_data.input + *index;
 	tmp = (char *)malloc(sizeof(char) * (ft_strlen(content) + 1));
 	if (!tmp)
-		exit (1); // manage_error (error malloc token)
+		return (NULL);
 	i = 0;
 	while (!ft_strchr(" \t<>|\"\'", content[i]))
 	{
@@ -29,7 +29,7 @@ static char	*quotes_token(char quote, int *index)
 	content = g_data.input + *index;
 	tmp = (char *)malloc(sizeof(char) * (ft_strlen(content) + 1));
 	if (!tmp)
-		exit (1); // manage_error (error malloc token)
+		return (NULL);
 	i = 0;
 	tmp[i++] = quote;
 	while (content[i] != quote)

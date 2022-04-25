@@ -28,7 +28,7 @@ static void	execute_builtin(t_cmd *cmd, int type_builtin)
 	else if (type_builtin == BUILTIN_ENV)
 		execute_env();
 	else if (type_builtin == BUILTIN_UNSET)
-		g_data.envp=execute_unset(g_data.envp, cmd->args);
+		execute_unset(&g_data.env, cmd->args);
 }
 
 static int	define_builtin(t_cmd *cmd)
@@ -48,7 +48,7 @@ void	child_process(t_pipex *pipex, t_cmd *cmd)
 {
 	int	type_builtin;
 
-	define_input_output(pipex, cmd); // перенаправление вводов и выводов
+	define_input_output(pipex, cmd); // сделать обработку ошибок
 	// перевести в нижний регистр название команды (если требуется)
 	type_builtin = define_builtin(cmd);
 	if (type_builtin)
@@ -57,7 +57,8 @@ void	child_process(t_pipex *pipex, t_cmd *cmd)
 	// 	save_tmp_variable(cmd);
 	else
 		execute_binary(cmd);
-	save_envp();
-	printf("check child\n");
+	save_update_envp();
+	close(pipex->pipes[1- pipex->used_pipes][0]);
+	close(pipex->pipes[pipex->used_pipes][1]);
 	exit (0);
 }

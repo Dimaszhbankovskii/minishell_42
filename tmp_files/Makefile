@@ -24,9 +24,7 @@ SRCS_LIST	=	main.c \
 				error_mess.c
 SRCS		=	$(addprefix $(SRCS_DIR)/,$(SRCS_LIST))
 
-SRCS_LIST_PARSER	=	env_1.c \
-						env_2.c \
-						lexer_1.c \
+SRCS_LIST_PARSER	=	lexer_1.c \
 						lexer_2.c \
 						tokens.c \
 						open_variables.c \
@@ -42,7 +40,7 @@ SRCS_LIST_EXECUTOR	=	executor.c \
 						child_process.c \
 						builtins.c \
 						builtin_unset.c \
-						update_envp.c \
+						envp.c \
 						binary_command.c
 SRCS_EXECUTOR		=	$(addprefix $(SRCS_DIR_EXECUTOR)/,$(SRCS_LIST_EXECUTOR))
 

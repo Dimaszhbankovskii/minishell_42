@@ -5,10 +5,13 @@ t_token	*new_token(char *str, int type, int *index)
 	t_token	*token;
 
 	if (!str)
-		exit (1); // manage_error (error malloc ft_strdup)
+		end_program(ERROR_INIT_TOKEN, 1, END1);
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
-		exit (1); // manage_error (error malloc token)
+	{
+		free (str);
+		end_program(ERROR_INIT_TOKEN, 1, END2);
+	}
 	token->content = str;
 	token->type = type;
 	token->next = NULL;

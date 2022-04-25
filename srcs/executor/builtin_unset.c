@@ -7,7 +7,7 @@ static void	unset_error_mess(char *name)
 	ft_putstr_fd(": not a valid identifier\n", STDERR_FILENO);
 }
 
-static int	check_valid_name_var(char *name) // валидны буквы, цифры и _ (цифры кроме первого символа)
+static int	check_valid_name_var(char *name)
 {
 	int	i;
 
@@ -41,35 +41,44 @@ static int	check_valid_unset(char **args)
 	return (flag_error);
 }
 
-static char	**unset_update_envp(char **envp, char *arg)
+t_env	*find_var_env(t_env **env, char *arg)
 {
-	char	**new_envp;
-	int		i;
-	int		j;
+	t_env	*tmp;
 
-	new_envp = (char **)malloc(sizeof(char *) + size_two_array_char(envp));
-	if (!new_envp)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (envp && envp[i])
+	tmp = *env;
+	while (tmp)
 	{
-		if (!ft_strncmp(arg, envp[i], ft_strlen(arg)))
-			i++;
-		if (!envp[i])
-			break ;
-		new_envp[j] = ft_strdup(envp[i]);
-		i++;
-		j++;
+		if (!ft_strncmp(arg, tmp->key, ft_strlen(arg)))
+			return (tmp);
+		tmp = tmp->next;
 	}
-	new_envp[i] = NULL;
-	return (new_envp);
+	return (NULL);
 }
 
-char	**execute_unset(char **envp, char **args)
+void	delete_var_env(t_env **env, t_env *del)
+{
+	t_env	*tmp1;
+
+	if (*env == del)
+		*env = del->next;
+	else
+	{
+		tmp1 = *env;
+		while (tmp1 && tmp1->next != del)
+			tmp1 = tmp1->next;
+		tmp1->next = del->next;
+	}
+	free (del->key);
+	free (del->value);
+	free (del->str);
+	free (del);
+}
+
+void	execute_unset(t_env **env, char **args)
 {
 	int		i;
 	int		flag_error;
+	t_env	*del;
 
 	if (!args[1])
 		flag_error = 0;
@@ -77,16 +86,13 @@ char	**execute_unset(char **envp, char **args)
 	{
 		flag_error = check_valid_unset(args);
 		i = 1;
-		while (args && args[i++])
+		while (args && args[i])
 		{
-			if (check_valid_name_var(args[i]) && find_str(envp, args[i]))
-			{
-				envp = unset_update_envp(envp, args[i]);
-				if (!envp)
-					return (NULL); // error manager
-			}
+			del = find_var_env(env, args[i]);
+			if (check_valid_name_var(args[i]) && del)
+				delete_var_env(env, del);
+			i++;
 		}
 	}
 	g_data.status = 0 + flag_error;
-	return (envp);
 }

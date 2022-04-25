@@ -36,9 +36,17 @@ static void	create_tmp_file(char *stop, t_cmd *cmd)
 
 	input = heredoc(stop);
 	cmd->tmpname = ft_strjoin(".tmp_heredoc", cmd->id);
-	fd = open(cmd->tmpname, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (!cmd->tmpname)
+	{
+		free (input);
+		end_program(ERROR_CREATE_HEREDOC, 1, END1);
+	}
+	fd = open(cmd->tmpname, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		exit (1); // error
+	{
+		free (input);
+		end_program(ERROR_CREATE_HEREDOC, errno, END2);
+	}
 	write(fd, input, ft_strlen(input));
 	close(fd);
 	free (input);

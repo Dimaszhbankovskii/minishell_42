@@ -103,7 +103,7 @@ int	execute_binary(t_cmd *cmd)
 
 	child = fork();
 	if (child < 0)
-		return (1);
+		return (warning("Error: fork\n", 1)); // error
 	if (!child)
 		child_process_binary(cmd, g_data.envp);
 	else

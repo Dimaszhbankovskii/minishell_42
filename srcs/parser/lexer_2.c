@@ -6,7 +6,7 @@ static char	*remove_outer_quotes(char *src)
 
 	dest = (char *)malloc(sizeof(char) * ft_strlen(src) - 1);
 	if (!dest)
-		exit (1); // error malloc
+		end_program(ERROR_OPEN_QUOTES, 1, END1);
 	ft_strlcpy(dest, src + 1, ft_strlen(src) - 1);
 	free (src);
 	return (dest);
@@ -22,7 +22,7 @@ static void	upgrade_token(t_token *token)
 	tmp2 = token->next;
 	new_content = ft_strjoin(tmp1->content, tmp2->content);
 	if (!new_content)
-		exit (1); // error manager
+		end_program(ERROR_COMBINE_TOKEN, 1, END1);
 	free (tmp1->content);
 	tmp1->content = new_content;
 	tmp1->next = tmp2->next;

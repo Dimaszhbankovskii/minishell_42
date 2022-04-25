@@ -18,7 +18,7 @@ static void	init_cmd(t_token *token)
 		}
 		cmd->args = malloc_two_array_char(cmd->count);
 		if (!cmd->args)
-			exit (1); // manager error
+			end_program(ERROR_MALLOC_CMD, 1, END1);
 	}
 }
 

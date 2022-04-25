@@ -14,6 +14,8 @@ char	**malloc_two_array_char(int len)
 	int		i;
 
 	array = (char **)malloc(sizeof(char *) * (len + 1));
+	if (!array)
+		return (NULL);
 	i = 0;
 	while (i <= len)
 		array[i++] = NULL;
@@ -41,7 +43,7 @@ void	add_back_elem_two_array_char(char **array, char *elem, int len)
 	if (i < len)
 		array[i] = ft_strdup(elem);
 	if (!array[i])
-		exit (1); // manager error
+		end_program(ERROR_ADD_ELEM_TWO_ARR, 1, END1);
 }
 
 char	*find_str(char **array, char *str)

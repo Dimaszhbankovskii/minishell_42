@@ -6,13 +6,16 @@ t_dict	*new_dict(int key, t_token *token)
 
 	new = (t_dict *)malloc(sizeof(t_dict));
 	if (!new)
-		exit (1); // manage error
+		end_program(ERROR_INIT_DICT, 1, END1);
 	new->key = key;	
 	if (token && token->type != PIPE)
 	{
 		new->value = ft_strdup(token->content);
 		if (!new)
-			exit (1); // manage error
+		{
+			free (new);
+			end_program(ERROR_INIT_DICT, 1, END1);
+		}
 	}
 	else
 		new->value = NULL;

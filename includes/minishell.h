@@ -8,9 +8,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
+# include <sys/wait.h> // ubuntu header need to delete
 # include "../libft/libft.h"
 
 # define FT_WEXITSTATUS(x) ((x >> 8) & 0x000000ff)
+
+# define END1 0
+# define END2 1
 
 # define SEPARATOR 1 // ' ', '\t'
 # define WORD 2
@@ -27,6 +31,22 @@
 # define BUILTIN_ENV 3
 # define BUILTIN_UNSET 4
 
+# define ERROR_NUM_ARGS "Error: num args in input minishell\n"
+# define ERROR_MALLOC_ENVP "Error: malloc in envp\n"
+# define ERROR_INIT_LIST_ENV "Error: init list env\n"
+# define ERROR_G_PIPE "g_data.pipe"
+# define ERROR_READLINE "Error: readline\n"
+# define ERROR_INIT_TOKEN "Error: init token\n"
+# define ERROR_OPEN_VAR "Error: open variable\n" // доработать
+# define ERROR_OPEN_QUOTES "Error: malloc in open quotes\n"
+# define ERROR_COMBINE_TOKEN "Error: malloc in combine token\n"
+# define ERROR_MALLOC_CMD "Error: malloc cmd\n"
+# define ERROR_ADD_ELEM_TWO_ARR "Error: malloc in add elem two arr\n"
+# define ERROR_INIT_DICT "Error: init dict\n"
+# define ERROR_INIT_ID_CMD "Error: malloc id cmd\n"
+# define ERROR_CREATE_HEREDOC "heredoc tmpfile"
+# define ERROR_INIT_PIPE_EXECUTOR "pipex.pipe"
+# define ERROR_FORK "pipex.fork"
 
 typedef struct s_pipex
 {
@@ -62,17 +82,32 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }				t_cmd;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	char			*str;
+	struct s_env	*next;
+}				t_env;
+
 typedef struct s_main
 {
-	int		pipes[3][2]; // 0 - char *envp, 1 - count, 2 - status
-	char	*input;
-	char	**envp;
+	int		fd[3][2]; // 0 - char *envp, 1 - count, 2 - status
 	int		status;
+	char	**envp;
+	t_env	*env;
+	char	*input;
 	t_token	*tokens;
 	t_cmd	*cmds;
 }				t_main;
 
 t_main	g_data;
+
+t_env	*list_env(char **envp);
+void	add_elem_env(t_env **env, t_env *new);
+t_env	*last_elem_env(t_env *env);
+t_env	*new_elem_env(char *str);
+t_env	*free_list_env(t_env *env);
 
 void	lexer(void);
 void	lexer_update_tokens(void);
@@ -105,12 +140,14 @@ void	redirect_output(t_cmd *cmd);
 void	execute_echo(t_cmd *cmd);
 void	execute_pwd(void);
 void 	execute_env(void);
-char	**execute_unset(char **envp, char **args);
+void	execute_unset(t_env **env, char **args);
 
-void	save_envp(void);
-void	get_envp(void);
+void	save_update_envp(void);
+void	get_update_envp(void);
 
 int		execute_binary(t_cmd *cmd);
+
+void	end_program(char *mess, int code, int mode);
 
 void	clear_data_loop(void);
 void	clear_g_data(void);
@@ -124,7 +161,9 @@ int		size_two_array_char(char **array);
 
 void	error_mess(char *mess, int code);
 int		warning(char *mess, int code);
+
 // delete
+void	print_list_env(void);
 void	check_print(void);
 
 #endif

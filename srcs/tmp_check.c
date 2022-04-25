@@ -1,26 +1,57 @@
 #include "../includes/minishell.h"
 
-void	check_print(void)
+void	print_envp(void)
 {
-	t_token	*token;
-	t_cmd	*cmd;
-	t_dict	*tmp;
+	char	**envp;
 	int		i;
 
+	envp = g_data.envp;
+	i = 0;
+	printf("------------------------------ g_data.envp -----------------------------\n");
+	while (envp && envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}
+}
+
+void	print_list_env(void)
+{
+	t_env	*env;
+
+	env = g_data.env;
+	printf("------------------------------ g_data.env ------------------------------\n");
+	while (env)
+	{
+		printf("key  -->%s\n", env->key);
+		printf("value-->%s\n", env->value);
+		env = env->next;
+	}
+}
+
+void	print_tokens(void)
+{
+	t_token	*token;
+
 	token = g_data.tokens;
-	printf("--------------------------------------------------------\n\n");
-	printf("input:\n%s\n", g_data.input);
-	printf("\n--------------------------------------------------------\n\n");
+	printf("------------------------------ g_data.token ----------------------------\n");
 	if (!token)
 		printf("g_data.token = NULL\n");
 	while (token)
 	{
-		printf("g_data.token: type = %d \t {%s} {%d}\n", token->type, token->content, token->content[0]);
+		printf("type = %d \t {%s}\n", token->type, token->content);
 		token = token->next;
 	}
+}
 
-	printf("\n--------------------------------------------------------\n\n");
+void	print_cmds(void)
+{
+	t_cmd	*cmd;
+	int		i;
+	t_dict	*tmp;
+
 	cmd = g_data.cmds;
+	printf("------------------------------ g_data.cmds -----------------------------\n");
 	if (!cmd)
 		printf("g_data.cmd = NULL\n");
 	while (cmd)
@@ -70,11 +101,18 @@ void	check_print(void)
 		printf("\n\n");
 		cmd = cmd->next;
 	}
-	printf("--------------------------------------------------------\n");
-	// printf("g_data.input=%p\n", g_data.input);
-	// printf("g_data.tokens=%p\n", g_data.tokens);
-	// printf("g_data.cmds=%p\n", g_data.cmds);
-	// printf("g_data.cmds=%p\n", g_data.cmds->infd);
-	// printf("g_data.cmds=%p\n", g_data.cmds->outfd);
-	// printf("g_data.envp=%p\n", g_data.envp);
+}
+
+void	check_print(void)
+{
+	printf("------------------------------------------------------------------------\n");
+	print_envp();
+	printf("\n------------------------------------------------------------------------\n");
+	print_list_env();
+	printf("\n------------------------------------------------------------------------\n");
+	printf("input:\n%s\n", g_data.input);
+	printf("\n------------------------------------------------------------------------\n");
+	print_tokens();
+	printf("\n------------------------------------------------------------------------\n");
+	print_cmds();
 }

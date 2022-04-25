@@ -17,7 +17,7 @@ static char	*get_value_variable(char *src, int len, char **envp)
 
 	var = (char *)malloc(sizeof(char) * (len + 1));
 	if (!var)
-		exit (1); // manage_error
+		end_program(ERROR_OPEN_VAR, 1, END1);
 	ft_strlcpy(var, src, len + 1);
 	i = 0;
 	while (envp[i])
