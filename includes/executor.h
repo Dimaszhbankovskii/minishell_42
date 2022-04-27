@@ -25,6 +25,8 @@ void	child_process(t_pipex *pipex, t_cmd *cmd);
 void	redirect_input(t_cmd *cmd);
 void	redirect_output(t_cmd *cmd);
 
+int		define_builtin(t_cmd *cmd);
+
 void	execute_echo(t_cmd *cmd);
 void	execute_pwd(void);
 void 	execute_env(void);

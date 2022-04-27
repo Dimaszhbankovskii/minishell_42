@@ -35,7 +35,7 @@ static void	execute_builtin(t_cmd *cmd, int type_builtin)
 		return ;
 }
 
-static int	define_builtin(t_cmd *cmd)
+int	define_builtin(t_cmd *cmd)
 {
 	if (cmd->args)
 	{
@@ -68,7 +68,8 @@ void	child_process(t_pipex *pipex, t_cmd *cmd)
 	// 	save_tmp_variable(cmd);
 	else
 		execute_binary(cmd);
-	save_update_envp();
+	if (pipex->i == pipex->num - 1 && define_builtin(cmd))
+		save_update_envp();
 	close(pipex->pipes[1- pipex->used_pipes][0]);
 	close(pipex->pipes[pipex->used_pipes][1]);
 	exit (0);

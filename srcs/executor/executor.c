@@ -37,9 +37,12 @@ static void	execute_cd_exit(t_cmd *cmd, int index)
 	// 	execute_cd(cmd->args, flag_execute);
 }
 
-void sigint_handler_child()
+void sigint_handler_child(int signum)
 {
-	ft_putstr_fd("\n",STDOUT_FILENO);
+	if (signum == SIGINT)
+		ft_putstr_fd("EXIT!!!\n",STDOUT_FILENO);
+	else if (signum == SIGQUIT)
+		ft_putstr_fd("QUITE EXIT!!!\n",STDOUT_FILENO);
 	exit(130);
 }
 
@@ -62,14 +65,16 @@ void	executor(t_cmd *cmds)
 		if (!pipex.pid)
 		{
 			signal(SIGINT, sigint_handler_child);
+			signal(SIGQUIT, sigint_handler_child);
 			child_process(&pipex, cmd);
 		}
 		close(pipex.pipes[1- pipex.used_pipes][0]);
 		close(pipex.pipes[pipex.used_pipes][1]);
+		if (pipex.i == pipex.num - 1 && define_builtin(cmd))
+			get_update_envp(); //обновление окружения
 		pipex.used_pipes = 1 - pipex.used_pipes;
 		pipex.i++;
 		cmd = cmd->next;
-		get_update_envp(); //обновление окружения
 	}
 	close(pipex.pipes[1- pipex.used_pipes][0]);
 	wait_child_process(pipex);

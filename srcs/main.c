@@ -43,7 +43,7 @@ void	display_ctrl_c(int display)
 
 int	main(int argc, char **argv, char **envp)
 {
-	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (argc != 1)
 		exit(warning(ERROR_NUM_ARGS, 1));
 	(void)argv;

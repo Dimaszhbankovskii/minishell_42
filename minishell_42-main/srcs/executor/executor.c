@@ -25,7 +25,7 @@ void	wait_child_process(t_pipex pipex)
 
 void sigint_handler_child()
 {
-	ft_putstr_fd("\n",STDOUT_FILENO);
+	ft_putstr_fd("EXIT!!!\n",STDOUT_FILENO);
 	exit(130);
 }
 

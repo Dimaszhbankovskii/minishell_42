@@ -73,7 +73,7 @@ int	check_valid_name_var(char *name)
 	return (1);
 }
 
-// t_env	*find_var_env(t_env **env, char *arg)
+// t_env	*find_elem_env(t_env **env, char *arg)
 // {
 // 	t_env	*tmp;
 
@@ -94,7 +94,7 @@ t_env	*find_elem_env(t_env **env, char *key)
 	tmp = *env;
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->key, key))
+		if (!ft_strcmp(tmp->key, key))
 			return (tmp);
 		tmp = tmp->next;
 	}

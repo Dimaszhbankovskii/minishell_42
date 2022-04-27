@@ -19,7 +19,15 @@ char	**cd_pwd_oldpwd(char *old_path)
 	return (g_line.envp);
 }
 
-cd
+void	cd_update_oldpwd(char *old_path)
+{
+	char	*str;
+	char	*value;
+	t_env	*tmp;
+
+	str = ft_strjoin("OLDPWD=", old_path);
+	tmp = find_elem_env(&g_data.env, "OLDPWD");
+}
 
 void	cd_update_env(char *old_path)
 {
@@ -72,12 +80,14 @@ void	execute_cd(char **args, int flag)
 
 	old_path = ft_strdup(getcwd(cwd, 4097)); // буфер со старой директорией
 	if (!old_path)
-		end_program("error malloc\n", 1, END1);
-	if (flag && (!args[1] || !ft_strcmp(args[1], "~")))
-		chdir(getenv("HOME")); // пробуем поменять на домашнюю директорию
-	// оработка если есть args[1]
-	// вариант ~/
-	// относительная или абсолютная директория
-	if (flag)
-		cd_update_env(old_path); // обновление окружения после cd
+		end_program("error malloc\n", 1, END1);m
+	if (flag && args[1])
+	{
+		if (!chdir(args[1]))
+			cd_update_env(old_path); // обновление окружения после cd
+		// else
+		// {
+		// 	free()
+		// }
+	}		
 }
