@@ -1,12 +1,11 @@
-# Makefile for Ubuntu
 NAME		=	minishell
 
 CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra -g
 READLINE	=	-lreadline
 
-# RL_INCLUDE	=	/Users/ladarys/.brew/opt/readline/include
-# RL_LIB		=	/Users/ladarys/.brew/opt/readline/lib
+RL_INCLUDE	=	/Users/ladarys/.brew/opt/readline/include
+RL_LIB		=	/Users/ladarys/.brew/opt/readline/lib
 
 INCLUDES	=	includes
 HEADER		=	minishell.h
@@ -57,9 +56,9 @@ SRCS += $(SRCS_EXECUTOR)
 
 OBJS_DIR	=	objs
 
-OBJS			=	$(addprefix $(OBJS_DIR)/,$(SRCS_LIST:.c=.o))
-OBJS			+=	$(addprefix $(OBJS_DIR)/,$(SRCS_LIST_PARSER:.c=.o))
-OBJS			+=	$(addprefix $(OBJS_DIR)/,$(SRCS_LIST_EXECUTOR:.c=.o))
+OBJS		=	$(addprefix $(OBJS_DIR)/,$(SRCS_LIST:.c=.o))
+OBJS		+=	$(addprefix $(OBJS_DIR)/,$(SRCS_LIST_PARSER:.c=.o))
+OBJS		+=	$(addprefix $(OBJS_DIR)/,$(SRCS_LIST_EXECUTOR:.c=.o))
 
 NORMAL		=	\033[0m
 BOLD		=	\033[1m
@@ -76,19 +75,19 @@ WHITE		=	\033[1;37m
 all : $(OBJS_DIR) $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $^ -o $@ $(READLINE)
+	@$(CC) $(CFLAGS) $(READLINE) -L$(RL_LIB) -I$(RL_INCLUDE) $^ -o $@
 	@echo "$(GREEN)Project succesfully compiled$(NORMAL)"
 
 $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c $(INCLUDES)/$(HEADER) $(INCLUDES)/$(PARSER_H) $(INCLUDES)/$(EXECUTOR_H) $(INCLUDES)/$(ERRORS_H) Makefile
-	@$(CC) $(CFLAGS) -c $< -o $@ $(READLINE)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(RL_INCLUDE)
 	@echo "$(BLUE)Creating object file$(WHITE) --> $(notdir $@) --> $(GREEN)[Done]$(NORMAL)"
 
 $(OBJS_DIR)/%.o : $(SRCS_DIR)/parser/%.c $(INCLUDES)/$(HEADER) $(INCLUDES)/$(PARSER_H) $(INCLUDES)/$(EXECUTOR_H) $(INCLUDES)/$(ERRORS_H) Makefile
-	@$(CC) $(CFLAGS) -c $< -o $@ $(READLINE)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(RL_INCLUDE)
 	@echo "$(BLUE)Creating object file$(WHITE) --> $(notdir $@) --> $(GREEN)[Done]$(NORMAL)"
 
 $(OBJS_DIR)/%.o : $(SRCS_DIR)/executor/%.c $(INCLUDES)/$(HEADER) $(INCLUDES)/$(PARSER_H) $(INCLUDES)/$(EXECUTOR_H) $(INCLUDES)/$(ERRORS_H) Makefile
-	@$(CC) $(CFLAGS) -c $< -o $@ $(READLINE)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(RL_INCLUDE)
 	@echo "$(BLUE)Creating object file$(WHITE) --> $(notdir $@) --> $(GREEN)[Done]$(NORMAL)"
 
 $(OBJS_DIR) :
