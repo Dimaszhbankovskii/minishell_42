@@ -9,6 +9,7 @@
 # define BUILTIN_UNSET 4
 # define BUILTIN_EXPORT 5
 # define BUILTIN_EXIT 6
+# define BUILTIN_CD 7
 
 typedef struct s_pipex
 {
@@ -32,7 +33,7 @@ void	execute_pwd(void);
 void 	execute_env(void);
 void	execute_unset(t_env **env, char **args);
 void	execute_export(char **envp, t_env *env, char **args);
-// void	execute_cd(char **args, int flag);
+void	execute_cd(char **args, int flag);
 void	execute_exit(t_cmd *cmd, int flag);
 
 void	save_update_envp(void);

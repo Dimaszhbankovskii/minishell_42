@@ -79,16 +79,6 @@ static void	child_process_binary(t_cmd *cmd, char **envp)
 {
 	char	**paths_envp;
 	char	*path_cmd;
-	
-	// if (envp)
-	// {
-	// 	printf("%s\n", envp[0]);
-	// 	printf("%s\n", envp[1]);
-	// 	printf("%s\n", envp[2]);
-	// }
-	// else
-	// 	printf("envp = NULL\n");
-
 
 	paths_envp = parsing_paths(envp);
 	if (!paths_envp)

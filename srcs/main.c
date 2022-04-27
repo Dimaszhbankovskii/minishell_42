@@ -5,7 +5,7 @@ char	*ft_readline(void)
 	char	*str;
 
 	str = readline(">>");
-	if (str)
+	if (str && *str)
 		add_history(str);
 	return (str);
 }
@@ -13,6 +13,8 @@ char	*ft_readline(void)
 static void	kernel_program(void)
 {	
 	lexer();
+	// check_print(); // check
+
 	parser();
 	// check_errors
 	executor(g_data.cmds);	

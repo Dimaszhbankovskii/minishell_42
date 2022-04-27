@@ -33,6 +33,9 @@ static void	execute_builtin(t_cmd *cmd, int type_builtin)
 		execute_export(g_data.envp, g_data.env, cmd->args);
 	else if (type_builtin == BUILTIN_EXIT)
 		return ;
+	else if (type_builtin == BUILTIN_CD)
+		return ;
+
 }
 
 int	define_builtin(t_cmd *cmd)
@@ -51,6 +54,8 @@ int	define_builtin(t_cmd *cmd)
 			return (BUILTIN_EXPORT);
 		else if (!ft_strcmp(cmd->args[0], "exit"))
 			return (BUILTIN_EXIT);
+		else if (!ft_strcmp(cmd->args[0], "cd"))
+			return (BUILTIN_CD);
 	}
 	return (0);
 }

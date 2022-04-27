@@ -47,6 +47,7 @@ SRCS_LIST_EXECUTOR	=	executor.c \
 						builtins.c \
 						builtin_unset.c \
 						builtin_export.c \
+						builtin_cd.c \
 						update_envp.c \
 						binary_command.c
 SRCS_EXECUTOR		=	$(addprefix $(SRCS_DIR_EXECUTOR)/,$(SRCS_LIST_EXECUTOR))
