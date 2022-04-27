@@ -1,12 +1,15 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <termios.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <errno.h>
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+// # include <readline/r>
 # include <fcntl.h>
 # include <sys/wait.h> // ubuntu header need to delete
 # include "../libft/libft.h"
@@ -18,6 +21,9 @@
 
 # define END1 0
 # define END2 1
+
+# define ON 0
+# define OFF 1
 
 typedef struct s_main
 {

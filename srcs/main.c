@@ -20,8 +20,30 @@ static void	kernel_program(void)
 	clear_data_loop();
 }
 
+void sigint_handler_main()
+{
+	ft_putstr_fd("\n", STDOUT_FILENO);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	display_ctrl_c(int display)
+{
+	struct termios t;
+
+	tcgetattr(0, &t);
+	if (display == OFF)
+		t.c_lflag |= ECHOCTL;
+	else
+		t.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &t);
+}
+
+
 int	main(int argc, char **argv, char **envp)
 {
+	// signal(SIGQUIT, SIG_IGN);
 	if (argc != 1)
 		exit(warning(ERROR_NUM_ARGS, 1));
 	(void)argv;
@@ -30,16 +52,21 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		init_g_data();
+		signal(SIGINT, sigint_handler_main);
+		display_ctrl_c(ON);
 		g_data.input = ft_readline();
+		signal(SIGINT, SIG_IGN);
+		display_ctrl_c(OFF);
 		if (!g_data.input) // ошибка readline
-			end_program(ERROR_READLINE, 1, END1);
+		{
+			write(1, ">> exit\n", 8);
+			end_program(NULL , 0, END1);
+		}
 		if (!*g_data.input || !ft_strcmp(g_data.input, "\n")) // ???
 		{
 			free (g_data.input);
 			continue;
 		}
-		// if (!ft_strcmp(g_data.input, "exit")) // ??? (будет команда обрабатываться)
-		// 	break ;
 		kernel_program();
 	}
 	clear_g_data();

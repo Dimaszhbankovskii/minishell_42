@@ -37,6 +37,12 @@ static void	execute_cd_exit(t_cmd *cmd, int index)
 	// 	execute_cd(cmd->args, flag_execute);
 }
 
+void sigint_handler_child()
+{
+	ft_putstr_fd("\n",STDOUT_FILENO);
+	exit(130);
+}
+
 void	executor(t_cmd *cmds)
 {
 	t_pipex	pipex;
@@ -54,7 +60,10 @@ void	executor(t_cmd *cmds)
 		if (pipex.pid < 0)
 			end_program(ERROR_FORK, errno, END2);
 		if (!pipex.pid)
+		{
+			signal(SIGINT, sigint_handler_child);
 			child_process(&pipex, cmd);
+		}
 		close(pipex.pipes[1- pipex.used_pipes][0]);
 		close(pipex.pipes[pipex.used_pipes][1]);
 		pipex.used_pipes = 1 - pipex.used_pipes;

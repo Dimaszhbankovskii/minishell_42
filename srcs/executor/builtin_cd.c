@@ -19,6 +19,8 @@ char	**cd_pwd_oldpwd(char *old_path)
 	return (g_line.envp);
 }
 
+cd
+
 void	cd_update_env(char *old_path)
 {
 	char	cwd[4096];
@@ -28,18 +30,39 @@ void	cd_update_env(char *old_path)
 
 	var = ft_strjoin("OLDPWD=", old_path);
 	tmp = find_elem_env(&g_data.env, "OLDPWD");
-	if (tmp)
+	if (tmp) // если в окружение env есть OLDPWD обновляем
 	{
 		free(tmp->value);
 		tmp->value = old_path;
 		free(tmp->str);
-		tmp->str = ft_strjoin("OLDPWD=", old_path);
+		tmp->str = var;
 	}
-	else
-
+	else // если нет, создаем и добавляем
+	{
+		tmp = new_elem_env(var);
+		if (!tmp)
+			end_program("Error malloc\n", 1, END1);
+		add_elem_env(&g_data.env, tmp);
+	}
 	pwd = ft_strdup(getcwd(cwd, 4096));
+	var = ft_strjoin("OLDPWD=", old_path);
 	if (!pwd)
 		exit (1); //error
+	tmp = find_elem_env(&g_data.env, "PWD");
+	if (tmp) // если в окружение env есть OLDPWD обновляем
+	{
+		free(tmp->value);
+		tmp->value = pwd;
+		free(tmp->str);
+		tmp->str = var;
+	}
+	else // если нет, создаем и добавляем
+	{
+		tmp = new_elem_env(var);
+		if (!tmp)
+			end_program("Error malloc\n", 1, END1);
+		add_elem_env(&g_data.env, tmp);
+	}
 }
 
 void	execute_cd(char **args, int flag)
@@ -55,7 +78,6 @@ void	execute_cd(char **args, int flag)
 	// оработка если есть args[1]
 	// вариант ~/
 	// относительная или абсолютная директория
-	
 	if (flag)
-		cd_update_env(old_path); // обнов
+		cd_update_env(old_path); // обновление окружения после cd
 }
