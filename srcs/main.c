@@ -38,8 +38,8 @@ int	main(int argc, char **argv, char **envp)
 			free (g_data.input);
 			continue;
 		}
-		if (!ft_strcmp(g_data.input, "exit")) // ??? (будет команда обрабатываться)
-			break ;
+		// if (!ft_strcmp(g_data.input, "exit")) // ??? (будет команда обрабатываться)
+		// 	break ;
 		kernel_program();
 	}
 	clear_g_data();

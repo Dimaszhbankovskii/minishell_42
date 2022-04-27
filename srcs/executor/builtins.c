@@ -50,3 +50,27 @@ void execute_env(void)
 	}
 	g_data.status = 0;
 }
+
+void	execute_exit(t_cmd *cmd, int flag)
+{
+	if (flag)
+	{
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+		g_data.status = 0;
+	}
+	if (cmd->args[1])
+	{
+		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+		ft_putstr_fd(cmd->args[1], STDERR_FILENO);
+		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+		g_data.status = 255;
+	}
+	if (flag)
+	{
+		if (!cmd->args[1])
+			end_program(NULL, 0, END1);
+		else
+			end_program(NULL, 255, END1);
+	}
+
+}

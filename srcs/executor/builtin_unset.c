@@ -25,20 +25,6 @@ static int	check_valid_unset(char **args)
 	return (flag_error);
 }
 
-t_env	*find_var_env(t_env **env, char *arg)
-{
-	t_env	*tmp;
-
-	tmp = *env;
-	while (tmp)
-	{
-		if (!ft_strncmp(arg, tmp->key, ft_strlen(arg)))
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
 void	delete_var_env(t_env **env, t_env *del)
 {
 	t_env	*tmp1;
@@ -72,7 +58,7 @@ void	execute_unset(t_env **env, char **args)
 		i = 1;
 		while (args && args[i])
 		{
-			del = find_var_env(env, args[i]);
+			del = find_elem_env(env, args[i]);
 			if (check_valid_name_var(args[i]) && del)
 				delete_var_env(env, del);
 			i++;

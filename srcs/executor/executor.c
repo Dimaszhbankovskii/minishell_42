@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	init_pipex(t_pipex *pipex, t_cmd *cmds)
+static void	init_pipex(t_pipex *pipex, t_cmd *cmds)
 {
 	pipex->i = 0;
 	pipex->num = count_cmds(cmds);
@@ -11,7 +11,7 @@ void	init_pipex(t_pipex *pipex, t_cmd *cmds)
 	pipex->pipes[1][1] = -1;
 }
 
-void	wait_child_process(t_pipex pipex)
+static void	wait_child_process(t_pipex pipex)
 {
 	int	i;
 
@@ -21,6 +21,20 @@ void	wait_child_process(t_pipex pipex)
 		waitpid(-1, 0, 0);
 		i++;
 	}
+}
+
+static void	execute_cd_exit(t_cmd *cmd, int index)
+{
+	int	flag_execute;
+
+	if (count_cmds(cmd) == 1 && !index)
+		flag_execute = 1;
+	else
+		flag_execute = 0;
+	if (!ft_strcmp(cmd->args[0], "exit"))
+		execute_exit(cmd, flag_execute);
+	// if (!ft_strcmp(cmd->args[0], "cd"))
+	// 	execute_cd(cmd->args, flag_execute);
 }
 
 void	executor(t_cmd *cmds)
@@ -33,6 +47,7 @@ void	executor(t_cmd *cmds)
 	cmd = cmds;
 	while (pipex.i < pipex.num)
 	{
+		execute_cd_exit(cmd, pipex.i);
 		if (pipe(pipex.pipes[pipex.used_pipes]) < 0)
 			end_program(ERROR_INIT_PIPE_EXECUTOR, errno, END2);
 		pipex.pid = fork();

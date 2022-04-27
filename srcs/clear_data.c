@@ -3,7 +3,7 @@
 void	end_program(char *mess, int code, int mode)
 {
 	clear_g_data();
-	if (mode == END1)
+	if (mode == END1 && mess)
 		write(STDERR_FILENO, mess, ft_strlen(mess));
 	else if (mode == END2)
 		perror(mess);

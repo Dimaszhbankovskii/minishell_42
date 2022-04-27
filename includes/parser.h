@@ -61,6 +61,7 @@ int		len_list_env(t_env **env);
 void	swap_list_env(t_env *env1, t_env *env2);
 void	sort_list_env(t_env **env);
 int		check_valid_name_var(char *name);
+t_env	*find_elem_env(t_env **env, char *key);
 
 void	lexer(void);
 void	lexer_update_tokens(void);
