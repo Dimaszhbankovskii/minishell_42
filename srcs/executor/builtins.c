@@ -4,15 +4,14 @@ void	execute_echo(t_cmd *cmd)
 {
 	int	i;
 
-	i = 1;
 	g_data.status = 0;
 	if(!cmd->args[1])
 	{
 		write(STDOUT_FILENO, "\n", 1);
 		return ;
 	}
-	while (cmd->args[i] && !ft_strncmp(cmd->args[i], "-n", \
-	ft_strlen(cmd->args[i])))
+	i = 1;
+	while (cmd->args[i] && *cmd->args[i] && !ft_strcmp(cmd->args[i], "-n"))
 		i++;
 	while (cmd->args[i])
 	{
@@ -21,7 +20,7 @@ void	execute_echo(t_cmd *cmd)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
 	}
-	if (ft_strncmp(cmd->args[1], "-n", ft_strlen(cmd->args[1])))
+	if (!*cmd->args[1] || ft_strcmp(cmd->args[1], "-n"))
 		ft_putchar_fd('\n', STDOUT_FILENO);
 }
 

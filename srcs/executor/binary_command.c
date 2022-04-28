@@ -1,11 +1,44 @@
 #include "../../includes/minishell.h"
 
-static char	*search_paths_in_envp(char **paths, char *cmd)
+// char	*relative_path(char *cmd)
+// {
+// 	char	*tmp1;
+// 	char	*tmp2;
+
+// 	tmp1 = getcwd(NULL, 0);
+// 	if (!tmp1)
+// 		end_program("Check relative path", errno, END2);
+// 	tmp2 = ft_strjoin(tmp1, "/");
+// 	free (tmp1);
+// 	if (!tmp2)
+// 		end_program("Error: malloc\n", 1, END1);
+// 	tmp1 = ft_strjoin(tmp2, cmd);
+// 	free (tmp2);
+// 	if (!tmp1)
+// 		end_program("Error: malloc\n", 1, END1);
+// 	if (!access(tmp1, X_OK))
+// 		return (tmp1);
+// 	free (tmp1);
+// 	return (NULL);
+// }
+
+// char	*absolute_path(char *cmd, char *relative)
+// {
+
+// }
+
+static char	*search_paths(char **paths, char *cmd)
 {
+	// char	*relative;
+	// char	*absolute;
+
 	int		i;
 	char	*tmp;
 	char	*filename;
 
+	// relative = relative_path(cmd);
+	if (!access(cmd, X_OK))
+		return (ft_strdup(cmd));
 	i = 0;
 	while (paths && paths[i])
 	{
@@ -25,32 +58,6 @@ static char	*search_paths_in_envp(char **paths, char *cmd)
 		i++;
 	}
 	return (NULL);
-}
-
-static char	*search_paths(char **paths, char *cmd)
-{
-	char	*filename;
-	char	*path;
-
-	if (!access(cmd, X_OK))
-		return (ft_strdup(cmd));
-	path= getcwd(NULL, 0);
-	if (!path)
-		return (NULL);
-	filename = ft_strjoin(path, cmd);
-	if (!filename)
-	{
-		free (path);
-		return (NULL);
-	}
-	if (!access(filename, X_OK))
-	{
-		free (path);
-		return (filename);
-	}
-	free (path);
-	free (filename);
-	return (search_paths_in_envp(paths, cmd));
 }
 
 static char	**parsing_paths(char **envp)

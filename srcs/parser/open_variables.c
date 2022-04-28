@@ -1,36 +1,24 @@
 #include "../../includes/minishell.h"
 
-static int	len_envp_var(char *str)
+static char	*get_value_variable(char *src, int len, t_env *env)
 {
-	int	i;
-
-	i = 0;
-	while (str && str[i] && str[i] != '=')
-		i++;
-	return (i);
-}
-
-static char	*get_value_variable(char *src, int len, char **envp)
-{
+	t_env	*tmp;
 	char	*var;
-	int		i;
 
 	var = (char *)malloc(sizeof(char) * (len + 1));
 	if (!var)
 		end_program(ERROR_OPEN_VAR, 1, END1);
 	ft_strlcpy(var, src, len + 1);
-	i = 0;
-	while (envp[i])
+	tmp = find_elem_env(&env, var);
+	if (tmp)
 	{
-		if (!ft_strncmp(var, envp[i], max(len, len_envp_var(envp[i]))))
-		{
-			free (var);
-			var = ft_strdup(envp[i] + len_envp_var(envp[i]) + 1);
-			return (var);
-		}
-		i++;
+		free (var);
+		var = ft_strdup(tmp->value);
+		if (!var)
+			end_program(ERROR_OPEN_VAR, 1, END1);
+		return (var);
 	}
-	if (!ft_strncmp(var, "?", 1))
+	if (!ft_strcmp(var, "?"))
 	{
 		free (var);
 		return (ft_itoa(g_data.status));
@@ -54,7 +42,7 @@ int *i, int len_name_var)
 	if (!new)
 	{
 		free (variable);
-		exit (1); // error manager
+		end_program(ERROR_OPEN_VAR, 1, END1);
 	}
 	ft_strlcpy(new, old, start + 1);
 	if (variable)
@@ -64,18 +52,16 @@ int *i, int len_name_var)
 	free (token->content);
 	token->content = ft_strdup(new);
 	if (!token->content)
-		exit (1); // error manager не скопировал данные для токена, ошибка malloc
+		end_program(ERROR_OPEN_VAR, 1, END1);
 	(*i) = start;
 	free (new);
 }
 
-static void	insert_variable(t_token *token, char *content, int *i, char **envp)
+static int	allocate_variable(char *content, int *i)
 {
-	char	*variable;
-	int		len;
+	int	len;
 
 	len = 0;
-	(*i)++;
 	if (content[*i] == '?' || ft_isdigit(content[*i]))
 	{
 		len++;
@@ -89,7 +75,19 @@ static void	insert_variable(t_token *token, char *content, int *i, char **envp)
 			(*i)++;
 		}
 	}
-	variable = get_value_variable(content + *i - len, len, envp);
+	return (len);
+}
+
+static void	insert_variable(t_token *token, char *content, int *i, t_env *env)
+{
+	char	*variable;
+	int		len;
+
+	(*i)++;
+	len = allocate_variable(content, i);
+	if (!len)
+		return ;
+	variable = get_value_variable(content + *i - len, len, env);
 	replace_variable(token, variable, i, len);
 	free (variable);
 }
@@ -113,7 +111,7 @@ void	open_variable(t_token *token)
 			quotes++;
 		if ((quotes % 2 == 0 || dquotes % 2 == 1) && content[i] == '$')
 		{
-			insert_variable(token, content, &i, g_data.envp);
+			insert_variable(token, content, &i, g_data.env);
 			content = token->content;
 		}
 		else

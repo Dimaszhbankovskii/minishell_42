@@ -13,9 +13,8 @@ char	*ft_readline(void)
 static void	kernel_program(void)
 {	
 	lexer();
-	// check_print(); // check
-
 	parser();
+	// check_print(); // check
 	// check_errors
 	executor(g_data.cmds);	
 	// check_print(); // check

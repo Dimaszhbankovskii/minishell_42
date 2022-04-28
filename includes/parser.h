@@ -28,6 +28,12 @@ typedef struct s_token
 	struct s_token	*next;
 }				t_token;
 
+// typedef struct s_arg
+// {
+// 	char			*value;
+// 	struct s_arg	*next;
+// }				t_arg;
+
 typedef struct s_dict
 {
 	int				key;
@@ -39,6 +45,7 @@ typedef struct s_cmd
 {
 	char			*id;
 	char			**args;
+	// t_arg			*arg;
 	int				count;
 	t_dict			*infd;
 	t_dict			*outfd;

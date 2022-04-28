@@ -38,12 +38,15 @@ void	add_back_elem_two_array_char(char **array, char *elem, int len)
 	int	i;
 
 	i = 0;
+	// if (elem && *elem)
+	// {
 	while (array && i < len && array[i])
 		i++;
 	if (i < len)
 		array[i] = ft_strdup(elem);
 	if (!array[i])
 		end_program(ERROR_ADD_ELEM_TWO_ARR, 1, END1);
+	// }
 }
 
 char	*find_str(char **array, char *str)

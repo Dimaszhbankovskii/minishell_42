@@ -69,8 +69,6 @@ void	child_process(t_pipex *pipex, t_cmd *cmd)
 	type_builtin = define_builtin(cmd);
 	if (type_builtin)
 		execute_builtin(cmd, type_builtin);
-	// else if (check_tmp_vatiable(cmd)) // ARG=text, ARG1=text1
-	// 	save_tmp_variable(cmd);
 	else
 		execute_binary(cmd);
 	if (pipex->i == pipex->num - 1 && define_builtin(cmd))
