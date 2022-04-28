@@ -28,11 +28,11 @@ typedef struct s_token
 	struct s_token	*next;
 }				t_token;
 
-// typedef struct s_arg
-// {
-// 	char			*value;
-// 	struct s_arg	*next;
-// }				t_arg;
+typedef struct s_arg
+{
+	char			*value;
+	struct s_arg	*next;
+}				t_arg;
 
 typedef struct s_dict
 {
@@ -45,7 +45,7 @@ typedef struct s_cmd
 {
 	char			*id;
 	char			**args;
-	// t_arg			*arg;
+	t_arg			*l_arg;
 	int				count;
 	t_dict			*infd;
 	t_dict			*outfd;
@@ -77,6 +77,9 @@ void	open_variable(t_token *token);
 t_token	*new_token(char *str, int type, int *index);
 void	add_token(t_token **tokens, t_token *new);
 void	free_tokens(void);
+
+t_arg	*new_arg(char *content);
+void	add_back_list_arg(t_arg **args, t_arg *new);
 
 void	parser(void);
 void	init_id_cmd(void);

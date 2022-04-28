@@ -28,6 +28,7 @@ static void	cmd_get_args(char *arg)
 
 	cmd = last_cmd(g_data.cmds);
 	add_back_elem_two_array_char(cmd->args, arg, cmd->count);
+	add_back_list_arg(&cmd->l_arg, new_arg(arg));
 }
 
 static t_token	*find_token_path_redirect(t_token *token)

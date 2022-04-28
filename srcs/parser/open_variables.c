@@ -88,6 +88,21 @@ static void	insert_variable(t_token *token, char *content, int *i, t_env *env)
 	if (!len)
 		return ;
 	variable = get_value_variable(content + *i - len, len, env);
+	if (!variable)
+	{
+		if (token->type == DQUOTES && (int)ft_strlen(token->content) - 3 == len)
+		{
+			free (token->content);
+			token->content = NULL;
+			return ;
+		}
+		else if (token->type == WORD && (int)ft_strlen(token->content) - 1 == len)
+		{
+			free (token->content);
+			token->content = NULL;
+			return ;
+		}
+	}
 	replace_variable(token, variable, i, len);
 	free (variable);
 }

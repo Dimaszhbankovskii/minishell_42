@@ -55,6 +55,7 @@ void	free_two_array_char(char **array);
 void	add_back_elem_two_array_char(char **array, char *elem, int len);
 char	*find_str(char **array, char *str);
 int		size_two_array_char(char **array);
+int		ft_is_num(char *str);
 
 void	error_mess(char *mess, int code);
 int		warning(char *mess, int code);

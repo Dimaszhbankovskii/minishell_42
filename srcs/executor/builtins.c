@@ -24,6 +24,30 @@ void	execute_echo(t_cmd *cmd)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
+// void	execute_echo(t_cmd *cmd)
+// {
+// 	t_arg	*tmp;
+
+// 	g_data.status = 0;
+// 	if(!cmd->l_arg->next)
+// 	{
+// 		write(STDOUT_FILENO, "\n", 1);
+// 		return ;
+// 	}
+// 	tmp = cmd->l_arg->next;
+// 	while (cmd->args[i] && *cmd->args[i] && !ft_strcmp(cmd->args[i], "-n"))
+// 		i++;
+// 	while (cmd->args[i])
+// 	{
+// 		ft_putstr_fd(cmd->args[i], STDOUT_FILENO);
+// 		if (cmd->args[i + 1])
+// 			ft_putchar_fd(' ', STDOUT_FILENO);
+// 		i++;
+// 	}
+// 	if (!*cmd->args[1] || ft_strcmp(cmd->args[1], "-n"))
+// 		ft_putchar_fd('\n', STDOUT_FILENO);
+// }
+
 void	execute_pwd(void)
 {
 	char	*path;
@@ -50,26 +74,27 @@ void execute_env(void)
 	g_data.status = 0;
 }
 
-void	execute_exit(t_cmd *cmd, int flag)
+void  execute_exit(t_cmd *cmd, int flag)
 {
-	if (flag)
-	{
-		ft_putstr_fd("exit\n", STDOUT_FILENO);
-		g_data.status = 0;
-	}
+	if (!flag)
+		return ;
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (cmd->args[1])
-	{
-		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-		ft_putstr_fd(cmd->args[1], STDERR_FILENO);
-		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-		g_data.status = 255;
-	}
-	if (flag)
-	{
-		if (!cmd->args[1])
-			end_program(NULL, 0, END1);
-		else
-			end_program(NULL, 255, END1);
-	}
-
+		{
+			if (!ft_is_num(cmd->args[1]))
+			{
+				ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+				ft_putstr_fd(cmd->args[1], STDERR_FILENO);
+				ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+				end_program(NULL, 255, END1);
+			}
+			else if (cmd->args[2])
+			{
+				ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+				g_data.status = 1;
+				return ;
+			}
+		end_program(NULL, ft_atoi(cmd->args[1]), END1);
+		}
+	end_program(NULL, 0, END1);
 }

@@ -14,13 +14,14 @@ static int	check_valid_unset(char **args)
 
 	flag_error = 0;
 	i = 1;
-	while (args && args[i++])
+	while (args && args[i])
 	{
 		if (!check_valid_name_var(args[i]))
 		{
 			unset_error_mess(args[i]);
 			flag_error = 1;
 		}
+		i++;
 	}
 	return (flag_error);
 }

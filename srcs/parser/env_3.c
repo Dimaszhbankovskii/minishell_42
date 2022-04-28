@@ -73,20 +73,6 @@ int	check_valid_name_var(char *name)
 	return (1);
 }
 
-// t_env	*find_elem_env(t_env **env, char *arg)
-// {
-// 	t_env	*tmp;
-
-// 	tmp = *env;
-// 	while (tmp)
-// 	{
-// 		if (!ft_strncmp(arg, tmp->key, ft_strlen(arg)))
-// 			return (tmp);
-// 		tmp = tmp->next;
-// 	}
-// 	return (NULL);
-// }
-
 t_env	*find_elem_env(t_env **env, char *key)
 {
 	t_env	*tmp;

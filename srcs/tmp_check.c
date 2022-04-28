@@ -54,7 +54,11 @@ void	print_tokens(void)
 		printf("g_data.token = NULL\n");
 	while (token)
 	{
-		printf("type = %d \t {%s} \t {%d}\n", token->type, token->content, token->content[0]);
+		printf("type = %d \t {%s} \t", token->type, token->content);
+		if (token->content)
+			printf(" {%d}\n", token->content[0]);
+		else
+			printf(" {  }\n");
 		token = token->next;
 	}
 }
@@ -64,6 +68,7 @@ void	print_cmds(void)
 	t_cmd	*cmd;
 	int		i;
 	t_dict	*tmp;
+	t_arg	*l_arg;
 
 	cmd = g_data.cmds;
 	printf("------------------------------ g_data.cmds -----------------------------\n");
@@ -79,6 +84,23 @@ void	print_cmds(void)
 			printf("[%s], ", cmd->args[i]);
 			i++;
 		}
+		printf("\n");
+		if (cmd->l_arg)
+		{
+			l_arg = cmd->l_arg;
+			printf("list_arg: ");
+			while (l_arg)
+			{
+				// printf("{'%d'; ", l_arg->value);
+				if (l_arg->value)
+					printf("{%s} ", l_arg->value);
+				else
+					printf("{NULL} ");
+				l_arg = l_arg->next;
+			}
+		}
+		else
+			printf("l_arg = NULL");
 		printf("\n");
 		if (cmd->infd)
 		{

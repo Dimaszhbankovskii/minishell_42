@@ -65,7 +65,8 @@ void	lexer_update_tokens(void)
 			open_variable(tmp);
 		if (tmp->type == QUOTES || tmp->type == DQUOTES)
 		{
-			tmp->content = remove_outer_quotes(tmp->content);
+			if (tmp->content)
+				tmp->content = remove_outer_quotes(tmp->content);
 		}
 		tmp = tmp->next;
 	}

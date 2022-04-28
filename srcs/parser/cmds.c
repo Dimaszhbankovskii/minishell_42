@@ -9,6 +9,7 @@ t_cmd	*new_cmd(void)
 		end_program(ERROR_MALLOC_CMD, 1, END1);
 	cmd->id = NULL;
 	cmd->args = NULL;
+	cmd->l_arg = NULL;
 	cmd->count = 0;
 	cmd->infd = NULL;
 	cmd->outfd = NULL;
@@ -54,6 +55,7 @@ void	free_cmd(void)
 			if (del->id)
 				free (del->id);
 			free_two_array_char(del->args);
+			// del list arg
 			del->infd=free_dict(del->infd);
 			del->outfd=free_dict(del->outfd);
 			if (del->tmpname)

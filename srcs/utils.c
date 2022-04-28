@@ -38,15 +38,12 @@ void	add_back_elem_two_array_char(char **array, char *elem, int len)
 	int	i;
 
 	i = 0;
-	// if (elem && *elem)
-	// {
 	while (array && i < len && array[i])
 		i++;
 	if (i < len)
 		array[i] = ft_strdup(elem);
 	if (!array[i])
 		end_program(ERROR_ADD_ELEM_TWO_ARR, 1, END1);
-	// }
 }
 
 char	*find_str(char **array, char *str)
@@ -71,4 +68,17 @@ int	size_two_array_char(char **array)
 	while (array && array[i])
 		i++;
 	return (i);
+}
+
+int	ft_is_num(char *str)
+{
+	if(*str == '+' || *str == '-')
+		str++;
+	while (*str)
+	{
+		if (*str < '0' || *str > '9')
+			return (0);
+		str++;
+	}
+	return (1);
 }

@@ -37,7 +37,8 @@ SRCS_LIST_PARSER	=	env_1.c \
 						parser_1.c \
 						parser_2.c \
 						cmds.c \
-						dicts.c
+						dicts.c \
+						list_arg.c
 SRCS_PARSER			=	$(addprefix $(SRCS_DIR_PARSER)/,$(SRCS_LIST_PARSER))
 
 SRCS_LIST_EXECUTOR	=	executor.c \
