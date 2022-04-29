@@ -1,52 +1,45 @@
 #include "../../includes/minishell.h"
 
+static int	echo_find_next_arg(t_arg *arg)
+{
+	t_arg	*tmp;
+
+	tmp = arg->next;
+	while (tmp)
+	{
+		if (tmp->value)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 void	execute_echo(t_cmd *cmd)
 {
-	int	i;
+	t_arg	*tmp;
 
 	g_data.status = 0;
-	if(!cmd->args[1])
+	if(!cmd->l_arg->next)
 	{
 		write(STDOUT_FILENO, "\n", 1);
 		return ;
 	}
-	i = 1;
-	while (cmd->args[i] && *cmd->args[i] && !ft_strcmp(cmd->args[i], "-n"))
-		i++;
-	while (cmd->args[i])
+	tmp = cmd->l_arg->next;
+	while (tmp && tmp->value && *tmp->value && !ft_strcmp(tmp->value, "-n"))
+		tmp = tmp->next;
+	while (tmp)
 	{
-		ft_putstr_fd(cmd->args[i], STDOUT_FILENO);
-		if (cmd->args[i + 1])
-			ft_putchar_fd(' ', STDOUT_FILENO);
-		i++;
+		if (tmp->value)
+		{
+			ft_putstr_fd(tmp->value, STDOUT_FILENO);
+			if (echo_find_next_arg(tmp))
+				ft_putchar_fd(' ', STDOUT_FILENO);
+		}
+		tmp = tmp->next;
 	}
-	if (!*cmd->args[1] || ft_strcmp(cmd->args[1], "-n"))
+	if (cmd->l_arg->next || ft_strcmp(cmd->l_arg->next->value, "-n"))
 		ft_putchar_fd('\n', STDOUT_FILENO);
 }
-
-// void	execute_echo(t_cmd *cmd)
-// {
-// 	t_arg	*tmp;
-
-// 	g_data.status = 0;
-// 	if(!cmd->l_arg->next)
-// 	{
-// 		write(STDOUT_FILENO, "\n", 1);
-// 		return ;
-// 	}
-// 	tmp = cmd->l_arg->next;
-// 	while (cmd->args[i] && *cmd->args[i] && !ft_strcmp(cmd->args[i], "-n"))
-// 		i++;
-// 	while (cmd->args[i])
-// 	{
-// 		ft_putstr_fd(cmd->args[i], STDOUT_FILENO);
-// 		if (cmd->args[i + 1])
-// 			ft_putchar_fd(' ', STDOUT_FILENO);
-// 		i++;
-// 	}
-// 	if (!*cmd->args[1] || ft_strcmp(cmd->args[1], "-n"))
-// 		ft_putchar_fd('\n', STDOUT_FILENO);
-// }
 
 void	execute_pwd(void)
 {

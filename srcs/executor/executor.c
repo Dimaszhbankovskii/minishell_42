@@ -31,9 +31,9 @@ static void	execute_cd_exit(t_cmd *cmd, int index)
 		flag_execute = 1;
 	else
 		flag_execute = 0;
-	if (!ft_strcmp(cmd->args[0], "exit"))
+	if (*cmd->args && !ft_strcmp(cmd->args[0], "exit"))
 		execute_exit(cmd, flag_execute);
-	if (!ft_strcmp(cmd->args[0], "cd"))
+	if (*cmd->args && !ft_strcmp(cmd->args[0], "cd"))
 		execute_cd(cmd->args, flag_execute);
 }
 

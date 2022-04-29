@@ -10,14 +10,38 @@ char	*ft_readline(void)
 	return (str);
 }
 
+static int check_quotes()
+{
+	int		i;
+	char	quote;
+
+	i=-1;
+	while (g_data.input[++i])
+	if (g_data.input[i] == '\"' || g_data.input[i] == '\'' )
+	{
+		quote = g_data.input[i++];
+		while (g_data.input[i])
+		{
+			if (g_data.input[i] == quote)
+			break ;
+			i++;
+		}
+		if (!g_data.input[i])
+		return (0);
+	}
+	return (1);
+}
+
 static void	kernel_program(void)
-{	
-	lexer();
-	parser();
-	// check_print(); // check
-	// check_errors
-	executor(g_data.cmds);	
-	// check_print(); // check
+{
+	if (check_quotes())
+	{
+		lexer();
+		parser();
+		// check_errors
+		executor(g_data.cmds);	
+		// check_print(); // check
+	}
 	clear_data_loop();
 }
 

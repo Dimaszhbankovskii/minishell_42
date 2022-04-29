@@ -4,8 +4,8 @@ CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra -g
 READLINE	=	-lreadline
 
-RL_INCLUDE	=	/Users/ladarys/.brew/opt/readline/include
-RL_LIB		=	/Users/ladarys/.brew/opt/readline/lib
+RL_INCLUDE	=	/Users/${USER}/.brew/opt/readline/include
+RL_LIB		=	/Users/${USER}/.brew/opt/readline/lib
 
 INCLUDES	=	includes
 HEADER		=	minishell.h
