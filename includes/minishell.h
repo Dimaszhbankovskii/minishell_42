@@ -41,8 +41,8 @@ t_main	g_data;
 char	**new_envp(char **envp);
 void	init_g_data(void);
 
-
-
+void	display_ctrl_c(int display);
+void	sigint_handler_main();
 
 void	end_program(char *mess, int code, int mode);
 

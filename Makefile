@@ -20,6 +20,7 @@ SRCS_DIR_PARSER		=	srcs/parser
 SRCS_DIR_EXECUTOR	=	srcs/executor
 
 SRCS_LIST	=	main.c \
+				signals.c \
 				init_data.c \
 				clear_data.c \
 				utils.c \

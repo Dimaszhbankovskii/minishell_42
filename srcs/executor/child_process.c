@@ -38,15 +38,33 @@ static void	execute_builtin(t_cmd *cmd, int type_builtin)
 
 }
 
+static int  ft_strcmp_lower_case(char const *str1, char const *str2)
+{
+  char   chr;
+  size_t  i;
+
+  i = 0;
+  while (i < ft_strlen(str1) || i < ft_strlen(str2))
+  {
+    chr = str1[i];
+    if (chr >= 'A' && chr <= 'Z')
+      chr = chr + 32;
+    if (chr != str2[i] || !str1[i] || !str2[i])
+      return (1);
+    i++;
+  }
+  return (0);
+}
+
 int	define_builtin(t_cmd *cmd)
 {
 	if (cmd->args)
 	{
-		if (!ft_strcmp(cmd->args[0], "echo"))
+		if (!ft_strcmp_lower_case(cmd->args[0], "echo"))
 			return (BUILTIN_ECHO);
-		else if (!ft_strcmp(cmd->args[0], "pwd"))
+		else if (!ft_strcmp_lower_case(cmd->args[0], "pwd"))
 			return (BUILTIN_PWD);
-		else if (!ft_strcmp(cmd->args[0], "env"))
+		else if (!ft_strcmp_lower_case(cmd->args[0], "env"))
 			return (BUILTIN_ENV);
 		else if (!ft_strcmp(cmd->args[0], "unset"))
 			return (BUILTIN_UNSET);
@@ -54,7 +72,7 @@ int	define_builtin(t_cmd *cmd)
 			return (BUILTIN_EXPORT);
 		else if (!ft_strcmp(cmd->args[0], "exit"))
 			return (BUILTIN_EXIT);
-		else if (!ft_strcmp(cmd->args[0], "cd"))
+		else if (!ft_strcmp_lower_case(cmd->args[0], "cd"))
 			return (BUILTIN_CD);
 	}
 	return (0);
@@ -65,7 +83,6 @@ void	child_process(t_pipex *pipex, t_cmd *cmd)
 	int	type_builtin;
 
 	define_input_output(pipex, cmd); // сделать обработку ошибок
-	// перевести в нижний регистр название команды (если требуется)
 	type_builtin = define_builtin(cmd);
 	if (type_builtin)
 		execute_builtin(cmd, type_builtin);
