@@ -14,13 +14,15 @@ static void	init_pipex(t_pipex *pipex, t_cmd *cmds)
 static void	wait_child_process(t_pipex pipex)
 {
 	int	i;
+	int	status;
 
 	i = 0;
 	while (i < pipex.num)
 	{
-		waitpid(-1, 0, 0);
+		waitpid(-1, &status, 0);
 		i++;
 	}
+	g_data.status = FT_WEXITSTATUS(status);
 }
 
 static void	execute_cd_exit(t_cmd *cmd, int index)
@@ -40,9 +42,9 @@ static void	execute_cd_exit(t_cmd *cmd, int index)
 void sigint_handler_child(int signum)
 {
 	if (signum == SIGINT)
-		ft_putstr_fd("EXIT!!!\n",STDOUT_FILENO);
+		ft_putstr_fd("\n",STDOUT_FILENO);
 	else if (signum == SIGQUIT)
-		ft_putstr_fd("QUITE EXIT!!!\n",STDOUT_FILENO);
+		ft_putstr_fd(MESS_QUIT, STDOUT_FILENO);
 	exit(130);
 }
 
@@ -71,11 +73,12 @@ void	executor(t_cmd *cmds)
 		close(pipex.pipes[1- pipex.used_pipes][0]);
 		close(pipex.pipes[pipex.used_pipes][1]);
 		if (pipex.i == pipex.num - 1 && define_builtin(cmd))
-			get_update_envp(); //обновление окружения
+			get_update_envp();
 		pipex.used_pipes = 1 - pipex.used_pipes;
 		pipex.i++;
 		cmd = cmd->next;
 	}
 	close(pipex.pipes[1- pipex.used_pipes][0]);
 	wait_child_process(pipex);
+	// unlink для временный файлов
 }

@@ -89,8 +89,10 @@ void	child_process(t_pipex *pipex, t_cmd *cmd)
 	else
 		execute_binary(cmd);
 	if (pipex->i == pipex->num - 1 && define_builtin(cmd))
+	// if (pipex->i == pipex->num - 1)
 		save_update_envp();
 	close(pipex->pipes[1- pipex->used_pipes][0]);
 	close(pipex->pipes[pipex->used_pipes][1]);
-	exit (0);
+	
+	exit (g_data.status);
 }

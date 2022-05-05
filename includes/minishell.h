@@ -9,13 +9,17 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-// # include <readline/r>
 # include <fcntl.h>
 # include <sys/wait.h> // ubuntu header need to delete
 # include "../libft/libft.h"
 # include "parser.h"
 # include "executor.h"
 # include "errors.h"
+
+# define PROMPT_MAIN "minishell>> "
+# define PROMPT_ADD_INPUT "> "
+# define MESS_SIG_EOF "exit\n"
+# define MESS_QUIT "Quit: 3\n"
 
 # define FT_WEXITSTATUS(x) ((x >> 8) & 0x000000ff)
 
@@ -27,7 +31,7 @@
 
 typedef struct s_main
 {
-	int		fd[3][2]; // 0 - char *envp, 1 - count, 2 - status
+	int		fd[3][2];
 	int		status;
 	char	**envp;
 	t_env	*env;
@@ -48,6 +52,12 @@ void	end_program(char *mess, int code, int mode);
 
 void	clear_data_loop(void);
 void	clear_g_data(void);
+
+int		check_last_pipe(char *input);
+void	add_input(void);
+int		check_open_quotes(char *input);
+int		invalid_tokens(t_token *tokens);
+int		invalid_redirects(t_cmd *cmds);
 
 int		max(int a, int b);
 char	**malloc_two_array_char(int len);

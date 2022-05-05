@@ -4,7 +4,7 @@ void	end_program(char *mess, int code, int mode)
 {
 	clear_g_data();
 	if (mode == END1 && mess)
-		write(STDERR_FILENO, mess, ft_strlen(mess));
+		ft_putstr_fd(mess, STDERR_FILENO);
 	else if (mode == END2)
 		perror(mess);
 	exit (code);
@@ -21,6 +21,12 @@ void	clear_data_loop(void)
 		free_tokens();
 	if (g_data.cmds)
 		free_cmd();
+	close(g_data.fd[0][0]);
+	close(g_data.fd[0][1]);
+	close(g_data.fd[1][0]);
+	close(g_data.fd[1][1]);
+	close(g_data.fd[2][0]);
+	close(g_data.fd[2][1]);
 }
 
 // очистка в конце программы

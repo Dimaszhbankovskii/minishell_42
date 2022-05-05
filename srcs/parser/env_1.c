@@ -38,7 +38,7 @@ t_env	*parsing_str_var_env(t_env *env, char *str)
 {
 	env->key = get_key(env->key, str);
 	env->value = get_value(env->value, str);
-	env->str = ft_strdup(str);
+	ft_strlcpy(env->str, str, ft_strlen(str) + 1);
 	return (env);
 }
 

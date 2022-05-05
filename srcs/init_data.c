@@ -30,18 +30,9 @@ void	init_g_data(void)
 	g_data.cmds = NULL;
 	g_data.env = list_env(g_data.envp);
 	if (pipe(g_data.fd[0]) < 0)
-	{
-		write(STDOUT_FILENO, "check 1\n", 8);
 		end_program(ERROR_G_PIPE, errno, END2);
-	}
 	if (pipe(g_data.fd[1]) < 0)
-	{
-		write(STDOUT_FILENO, "check 1\n", 8);
 		end_program(ERROR_G_PIPE, errno, END2);
-	}
 	if (pipe(g_data.fd[2]) < 0)
-	{
-		write(STDOUT_FILENO, "check 1\n", 8);
 		end_program(ERROR_G_PIPE, errno, END2);
-	}
 }

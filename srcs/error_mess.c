@@ -8,6 +8,6 @@ void	error_mess(char *mess, int code)
 
 int	warning(char *mess, int code)
 {
-	write(STDERR_FILENO, mess, ft_strlen(mess));
+	ft_putstr_fd(mess, STDERR_FILENO);
 	return (code);
 }

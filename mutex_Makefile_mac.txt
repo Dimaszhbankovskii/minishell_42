@@ -23,8 +23,6 @@ SRCS_LIST	=	main.c \
 				signals.c \
 				init_data.c \
 				clear_data.c \
-				shell_utils_1.c \
-				shell_utils_2.c \
 				utils.c \
 				tmp_check.c \
 				error_mess.c

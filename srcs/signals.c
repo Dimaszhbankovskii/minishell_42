@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-void	sigint_handler_main()
+void	sigint_handler_main(void)
 {
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_on_new_line();

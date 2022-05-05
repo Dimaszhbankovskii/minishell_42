@@ -75,7 +75,7 @@ static void	child_process_binary(t_cmd *cmd, char **envp)
 	paths_envp = parsing_paths(envp);
 	if (!paths_envp)
 		exit(warning("Error: parsing ENVP PATH\n", EXIT_FAILURE));
-	if (!cmd->args[0]) // check ( |   ls -l) (ls -l |    ) два случая надо ограничить
+	if (!cmd->args[0])
 		exit(warning("Error: binary file not exist\n", EXIT_FAILURE)); // ???
 	path_cmd = search_paths(paths_envp, cmd->args[0]);
 	if (!path_cmd)
@@ -100,6 +100,6 @@ int	execute_binary(t_cmd *cmd)
 		child_process_binary(cmd, g_data.envp);
 	else
 		waitpid(child, &g_data.status, 0);
-	// сделать макрос
+	g_data.status = FT_WEXITSTATUS(g_data.status);
 	return (0);
 }
