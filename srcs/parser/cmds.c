@@ -55,11 +55,11 @@ void	free_cmd(void)
 			if (del->id)
 				free (del->id);
 			free_two_array_char(del->args);
-			// del list arg
-			del->infd=free_dict(del->infd);
-			del->outfd=free_dict(del->outfd);
+			del->l_arg = free_list_arg(del->l_arg);
+			del->infd = free_dict(del->infd);
+			del->outfd = free_dict(del->outfd);
 			if (del->tmpname)
-				free(del->tmpname);
+				free (del->tmpname);
 			free (del);
 			del = tmp;
 		}

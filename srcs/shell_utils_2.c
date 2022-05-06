@@ -2,9 +2,9 @@
 
 static int	print_fd_error(char *str)
 {
-	ft_putstr_fd("minishell: syntax error near unexpected token `",STDERR_FILENO);
-	ft_putstr_fd(str,STDERR_FILENO);
-	ft_putstr_fd("'\n",STDERR_FILENO);
+	ft_putstr_fd(ERROR_SYNTAX_INVALID_REDIRECT_1, STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(ERROR_SYNTAX_INVALID_REDIRECT_2, STDERR_FILENO);
 	return (0);
 }
 
@@ -14,7 +14,7 @@ static int check_dict(t_dict *dict)
 	{
 		if (!dict->value)
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",STDERR_FILENO);
+			ft_putstr_fd(ERROR_SYNTAX_NO_REDIRECT, STDERR_FILENO);
 			return (0);
 		}
 		if (!ft_strcmp(dict->value, "<<"))

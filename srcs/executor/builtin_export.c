@@ -10,9 +10,11 @@ static void	export_error_mess(char *name)
 static void	export_no_args(char **envp)
 {
 	t_env	*tmp;
+	t_env	*begin;
 
 	tmp = list_env(envp);
 	sort_list_env(&tmp);
+	begin = tmp;
 	while (tmp)
 	{
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
@@ -22,7 +24,7 @@ static void	export_no_args(char **envp)
 		ft_putstr_fd("\"\n", STDOUT_FILENO);
 		tmp = tmp->next;
 	}
-	tmp = free_list_env(tmp);
+	tmp = free_list_env(begin);
 }
 
 static int	check_valid_export(t_env *env)

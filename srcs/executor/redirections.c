@@ -23,8 +23,8 @@ void	redirect_input(t_cmd *cmd)
 		error_mess(tmp->value, errno);
 	if (fd)
 		close(fd);
-	if (cmd->tmpname && unlink(cmd->tmpname) < 0)
-		error_mess(tmp->value, errno);
+	// if (cmd->tmpname && unlink(cmd->tmpname) < 0)
+	// 	error_mess(tmp->value, errno);
 }
 
 void	redirect_output(t_cmd *cmd)

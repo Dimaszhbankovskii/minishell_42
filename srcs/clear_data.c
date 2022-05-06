@@ -10,7 +10,6 @@ void	end_program(char *mess, int code, int mode)
 	exit (code);
 }
 
-// очистка в цикле (на следующую итерацию)
 void	clear_data_loop(void)
 {
 	if (g_data.env)
@@ -29,8 +28,6 @@ void	clear_data_loop(void)
 	close(g_data.fd[2][1]);
 }
 
-// очистка в конце программы
-// очистка при ошибках
 void	clear_g_data(void)
 {
 	if (g_data.envp)
@@ -43,4 +40,10 @@ void	clear_g_data(void)
 		free_tokens();
 	if (g_data.cmds)
 		free_cmd();
+	close(g_data.fd[0][0]);
+	close(g_data.fd[0][1]);
+	close(g_data.fd[1][0]);
+	close(g_data.fd[1][1]);
+	close(g_data.fd[2][0]);
+	close(g_data.fd[2][1]);
 }

@@ -71,7 +71,7 @@ void  execute_exit(t_cmd *cmd, int flag)
 {
 	if (!flag)
 		return ;
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (cmd->args[1])
 		{
 			if (!ft_is_num(cmd->args[1]))

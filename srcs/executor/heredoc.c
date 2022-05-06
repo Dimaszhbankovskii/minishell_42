@@ -8,7 +8,7 @@ static char	*heredoc(char *stop)
 	char	*input;
 
 	input = NULL;
-	tmp1 = readline("heredoc >");
+	tmp1 = readline(PROMPT_HEREDOC);
 	while (ft_strncmp(tmp1, stop, ft_strlen(stop)))
 	{
 		tmp2 = ft_strjoin(tmp1, "\n");
@@ -23,7 +23,7 @@ static char	*heredoc(char *stop)
 			input = ft_strdup(tmp2);
 		free (tmp2);
 		free (tmp1);
-		tmp1 = readline("heredoc >");
+		tmp1 = readline(PROMPT_HEREDOC);
 	}
 	free (tmp1);
 	return (input);
@@ -35,7 +35,7 @@ static void	create_tmp_file(char *stop, t_cmd *cmd)
 	int		fd;
 
 	input = heredoc(stop);
-	cmd->tmpname = ft_strjoin(".tmp_heredoc", cmd->id);
+	cmd->tmpname = ft_strjoin(PROTOTYPE_HEREDOC, cmd->id);
 	if (!cmd->tmpname)
 	{
 		free (input);

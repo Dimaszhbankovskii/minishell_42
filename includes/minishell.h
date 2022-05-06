@@ -18,6 +18,8 @@
 
 # define PROMPT_MAIN "minishell>> "
 # define PROMPT_ADD_INPUT "> "
+# define PROMPT_HEREDOC "heredoc > "
+# define PROTOTYPE_HEREDOC ".tmp_heredoc"
 # define MESS_SIG_EOF "exit\n"
 # define MESS_QUIT "Quit: 3\n"
 
@@ -47,6 +49,7 @@ void	init_g_data(void);
 
 void	display_ctrl_c(int display);
 void	sigint_handler_main();
+void	sigint_handler_child(int signum);
 
 void	end_program(char *mess, int code, int mode);
 

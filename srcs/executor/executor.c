@@ -39,22 +39,10 @@ static void	execute_cd_exit(t_cmd *cmd, int index)
 		execute_cd(cmd->args, flag_execute);
 }
 
-void sigint_handler_child(int signum)
+static void	kernel_executor(t_pipex pipex, t_cmd *cmds)
 {
-	if (signum == SIGINT)
-		ft_putstr_fd("\n",STDOUT_FILENO);
-	else if (signum == SIGQUIT)
-		ft_putstr_fd(MESS_QUIT, STDOUT_FILENO);
-	exit(130);
-}
-
-void	executor(t_cmd *cmds)
-{
-	t_pipex	pipex;
 	t_cmd	*cmd;
 
-	init_pipex(&pipex, cmds);
-	handling_heredoc(cmds);
 	cmd = cmds;
 	while (pipex.i < pipex.num)
 	{
@@ -78,7 +66,31 @@ void	executor(t_cmd *cmds)
 		pipex.i++;
 		cmd = cmd->next;
 	}
-	close(pipex.pipes[1- pipex.used_pipes][0]);
+}
+
+void	unlink_tmp_files(t_cmd *cmds)
+{
+	t_cmd	*tmp;
+
+	tmp = cmds;
+	while (tmp)
+	{
+		if (tmp->tmpname && unlink(tmp->tmpname) < 0)
+			error_mess(tmp->tmpname, errno);
+		tmp = tmp->next;
+	}
+}
+
+
+void	executor(t_cmd *cmds)
+{
+	t_pipex	pipex;
+
+	init_pipex(&pipex, cmds);
+	handling_heredoc(cmds);
+	kernel_executor(pipex, cmds);
+	// close(pipex.pipes[1- pipex.used_pipes][0]);	// ???
+	// close(pipex.pipes[pipex.used_pipes][1]);		// ???
 	wait_child_process(pipex);
-	// unlink для временный файлов
+	unlink_tmp_files(cmds);
 }

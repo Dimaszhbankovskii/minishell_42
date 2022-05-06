@@ -80,6 +80,7 @@ void	free_tokens(void);
 
 t_arg	*new_arg(char *content);
 void	add_back_list_arg(t_arg **args, t_arg *new);
+t_arg	*free_list_arg(t_arg *args);
 
 void	parser(void);
 void	init_id_cmd(void);

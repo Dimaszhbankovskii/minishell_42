@@ -63,6 +63,8 @@ int	invalid_tokens(t_token *tokens)
 {
 	t_token	*tmp;
 
+	if (tokens->type == SEPARATOR && tokens->next == NULL)
+		return (1);
 	if (tokens->type == PIPE || \
 	(tokens->type == SEPARATOR && tokens->next->type == PIPE))
 		return (warning(ERROR_SYNTAX_FIRST_PIPE, 1));

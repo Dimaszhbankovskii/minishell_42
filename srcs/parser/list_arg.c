@@ -6,14 +6,14 @@ t_arg	*new_arg(char *content)
 
 	new = (t_arg *)malloc(sizeof(t_arg));
 	if (!new)
-		end_program("Error\n", 1, END1);
+		end_program(ERROR_INIT_LIST_ARG, 1, END1);
 	if (content)
 	{
 		new->value = ft_strdup(content);
 		if (!new->value)
 		{
 			free (new);
-			end_program("Error\n", 1, END1); //error
+			end_program(ERROR_INIT_LIST_ARG, 1, END1);
 		}
 	}
 	else
@@ -38,4 +38,24 @@ void	add_back_list_arg(t_arg **args, t_arg *new)
 			tmp->next = new;
 		}
 	}
+}
+
+t_arg	*free_list_arg(t_arg *args)
+{
+	t_arg	*tmp;
+	t_arg	*del;
+
+	del = args;
+	if (del)
+	{
+		while (del)
+		{
+			tmp = del->next;
+			if (del->value)
+				free (del->value);
+			free (del);
+			del = tmp;
+		}
+	}
+	return (NULL);
 }
