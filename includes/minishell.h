@@ -10,6 +10,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <fcntl.h>
+# include <limits.h>
 # include <sys/wait.h> // ubuntu header need to delete
 # include "../libft/libft.h"
 # include "parser.h"

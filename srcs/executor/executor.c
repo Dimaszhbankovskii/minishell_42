@@ -9,8 +9,9 @@ static void	init_pipex(t_pipex *pipex, t_cmd *cmds)
 	pipex->pipes[0][1] = -1;
 	pipex->pipes[1][0] = -1;
 	pipex->pipes[1][1] = -1;
-
-	pipex->arr_pid = (pid_t *)malloc(sizeof(pid_t) * pipex->num);	
+	pipex->pid = (pid_t *)malloc(sizeof(pid_t) * pipex->num);
+	if (!pipex->pid)
+		exit (1); // error	
 }
 
 static void	wait_child_process(t_pipex pipex)
@@ -21,7 +22,7 @@ static void	wait_child_process(t_pipex pipex)
 	i = 0;
 	while (i < pipex.num)
 	{
-		waitpid(pipex.arr_pid[i], &status, 0);
+		waitpid(pipex.pid[i], &status, 0);
 		i++;
 	}
 	g_data.status = FT_WEXITSTATUS(status);
@@ -50,21 +51,18 @@ static void	kernel_executor(t_pipex pipex, t_cmd *cmds)
 	{
 		execute_cd_exit(cmd, pipex.i);
 		if (pipe(pipex.pipes[pipex.used_pipes]) < 0)
-			end_program(ERROR_INIT_PIPE_EXECUTOR, errno, END2);
-		
-		// pipex.pid = fork();
-		pipex.arr_pid[pipex.i] = fork();
-
-		// if (pipex.pid < 0)
-		if (pipex.arr_pid[pipex.i] < 0)
-			end_program(ERROR_FORK, errno, END2);
-		// if (!pipex.pid)
-		if (!pipex.arr_pid[pipex.i])
 		{
-			signal(SIGINT, sigint_handler_child);
-			signal(SIGQUIT, sigint_handler_child);
-			child_process(&pipex, cmd);
+			free (pipex.pid);
+			end_program(ERROR_INIT_PIPE_EXECUTOR, errno, END2);
 		}
+		pipex.pid[pipex.i] = fork();
+		if (pipex.pid[pipex.i] < 0)
+		{
+			free (pipex.pid);
+			end_program(ERROR_FORK, errno, END2);
+		}
+		if (!pipex.pid[pipex.i])
+			child_process(&pipex, cmd);
 		close(pipex.pipes[1- pipex.used_pipes][0]);
 		close(pipex.pipes[pipex.used_pipes][1]);
 		if (pipex.i == pipex.num - 1 && define_builtin(cmd))
@@ -83,7 +81,7 @@ void	unlink_tmp_files(t_cmd *cmds)
 	while (tmp)
 	{
 		if (tmp->tmpname && unlink(tmp->tmpname) < 0)
-			error_mess(tmp->tmpname, errno);
+			end_program(tmp->tmpname, errno, END2);
 		tmp = tmp->next;
 	}
 }
@@ -96,8 +94,7 @@ void	executor(t_cmd *cmds)
 	init_pipex(&pipex, cmds);
 	handling_heredoc(cmds);
 	kernel_executor(pipex, cmds);
-	// close(pipex.pipes[1- pipex.used_pipes][0]);	// ???
-	// close(pipex.pipes[pipex.used_pipes][1]);		// ???
 	wait_child_process(pipex);
+	free (pipex.pid);
 	unlink_tmp_files(cmds);
 }

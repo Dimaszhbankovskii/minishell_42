@@ -82,7 +82,9 @@ void	child_process(t_pipex *pipex, t_cmd *cmd)
 {
 	int	type_builtin;
 
-	define_input_output(pipex, cmd); // сделать обработку ошибок
+	signal(SIGINT, sigint_handler_child);
+	signal(SIGQUIT, sigint_handler_child);
+	define_input_output(pipex, cmd);
 	type_builtin = define_builtin(cmd);
 	if (type_builtin)
 		execute_builtin(cmd, type_builtin);
