@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_1.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 21:19:56 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/06 21:21:09 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 char	*get_key(char *key, char *str)
@@ -59,7 +71,7 @@ t_env	*new_elem_env(char *str)
 	return (new);
 }
 
-t_env	*free_elem_env(t_env * env)
+t_env	*free_elem_env(t_env *env)
 {
 	if (env)
 	{

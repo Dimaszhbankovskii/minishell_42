@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_1.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 21:20:16 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/06 21:23:13 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static void	init_cmd(t_token *token)
@@ -12,7 +24,8 @@ static void	init_cmd(t_token *token)
 		cmd = last_cmd(g_data.cmds);
 		while (tmp && tmp->type != PIPE)
 		{
-			if (tmp->type == WORD || tmp->type == QUOTES || tmp->type == DQUOTES)
+			if (tmp->type == WORD || tmp->type == QUOTES || \
+										tmp->type == DQUOTES)
 				cmd->count++;
 			tmp = tmp->next;
 		}
@@ -33,7 +46,7 @@ static void	cmd_get_args(char *arg)
 
 static t_token	*find_token_path_redirect(t_token *token)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = token->next;
 	while (tmp && tmp->type != PIPE)

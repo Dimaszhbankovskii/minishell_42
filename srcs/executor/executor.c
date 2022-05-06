@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 21:24:01 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/06 21:26:13 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static void	init_pipex(t_pipex *pipex, t_cmd *cmds)
@@ -63,7 +75,7 @@ static void	kernel_executor(t_pipex pipex, t_cmd *cmds)
 		}
 		if (!pipex.pid[pipex.i])
 			child_process(&pipex, cmd);
-		close(pipex.pipes[1- pipex.used_pipes][0]);
+		close(pipex.pipes[1 - pipex.used_pipes][0]);
 		close(pipex.pipes[pipex.used_pipes][1]);
 		if (pipex.i == pipex.num - 1 && define_builtin(cmd))
 			get_update_envp();
@@ -85,7 +97,6 @@ void	unlink_tmp_files(t_cmd *cmds)
 		tmp = tmp->next;
 	}
 }
-
 
 void	executor(t_cmd *cmds)
 {

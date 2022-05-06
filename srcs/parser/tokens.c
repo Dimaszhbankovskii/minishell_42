@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokens.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 21:20:21 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/06 21:23:23 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 t_token	*new_token(char *str, int type, int *index)
@@ -42,7 +54,7 @@ void	free_tokens(void)
 	t_token	*tmp;
 	t_token	*del;
 
-	del=g_data.tokens;
+	del = g_data.tokens;
 	while (del)
 	{
 		tmp = del->next;

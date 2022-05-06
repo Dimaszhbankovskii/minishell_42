@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   update_envp.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 21:24:14 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/06 21:24:51 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	save_update_envp(void)
@@ -16,7 +28,7 @@ void	save_update_envp(void)
 	}
 	close(g_data.fd[0][1]);
 	write(g_data.fd[1][1], &i, sizeof(int));
-	close(g_data.fd[1][1]);	
+	close(g_data.fd[1][1]);
 	write(g_data.fd[2][1], &g_data.status, sizeof(int));
 	close(g_data.fd[2][1]);
 }

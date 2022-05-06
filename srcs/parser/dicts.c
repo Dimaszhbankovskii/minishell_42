@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dicts.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 21:19:53 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/06 21:20:47 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 t_dict	*new_dict(int key, t_token *token)
@@ -7,7 +19,7 @@ t_dict	*new_dict(int key, t_token *token)
 	new = (t_dict *)malloc(sizeof(t_dict));
 	if (!new)
 		end_program(ERROR_INIT_DICT, 1, END1);
-	new->key = key;	
+	new->key = key;
 	if (token && token->type != PIPE)
 	{
 		new->value = ft_strdup(token->content);

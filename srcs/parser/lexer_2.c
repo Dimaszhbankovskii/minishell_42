@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 21:20:08 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/06 21:21:34 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static char	*remove_outer_quotes(char *src)
@@ -42,7 +54,7 @@ static void	combine_token(void)
 		(tmp->type == WORD && tmp->next->type == WORD) || \
 		(tmp->type == QUOTES && tmp->next->type == QUOTES) || \
 		(tmp->type == QUOTES && tmp->next->type == DQUOTES) || \
-		(tmp->type == QUOTES && tmp->next->type == WORD) ||
+		(tmp->type == QUOTES && tmp->next->type == WORD) || \
 		(tmp->type == DQUOTES && tmp->next->type == QUOTES) || \
 		(tmp->type == DQUOTES && tmp->next->type == DQUOTES) || \
 		(tmp->type == DQUOTES && tmp->next->type == WORD))

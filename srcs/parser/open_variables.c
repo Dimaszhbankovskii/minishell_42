@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   open_variables.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 21:20:14 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/06 21:22:29 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static char	*get_value_variable(char *src, int len, t_env *env)
@@ -96,7 +108,7 @@ static void	insert_variable(t_token *token, char *content, int *i, t_env *env)
 			token->content = NULL;
 			return ;
 		}
-		else if (token->type == WORD && (int)ft_strlen(token->content) - 1 == len)
+		if (token->type == WORD && (int)ft_strlen(token->content) - 1 == len)
 		{
 			free (token->content);
 			token->content = NULL;

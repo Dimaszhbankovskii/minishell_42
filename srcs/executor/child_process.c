@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   child_process.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/06 21:24:18 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/06 21:28:15 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 static void	define_input_output(t_pipex *pipex, t_cmd *cmd)
@@ -35,25 +47,24 @@ static void	execute_builtin(t_cmd *cmd, int type_builtin)
 		return ;
 	else if (type_builtin == BUILTIN_CD)
 		return ;
-
 }
 
-static int  ft_strcmp_lower_case(char const *str1, char const *str2)
+static int	ft_strcmp_lower_case(char const *str1, char const *str2)
 {
-  char   chr;
-  size_t  i;
+	char	chr;
+	size_t	i;
 
-  i = 0;
-  while (i < ft_strlen(str1) || i < ft_strlen(str2))
-  {
-    chr = str1[i];
-    if (chr >= 'A' && chr <= 'Z')
-      chr = chr + 32;
-    if (chr != str2[i] || !str1[i] || !str2[i])
-      return (1);
-    i++;
-  }
-  return (0);
+	i = 0;
+	while (i < ft_strlen(str1) || i < ft_strlen(str2))
+	{
+		chr = str1[i];
+		if (chr >= 'A' && chr <= 'Z')
+			chr = chr + 32;
+		if (chr != str2[i] || !str1[i] || !str2[i])
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int	define_builtin(t_cmd *cmd)
@@ -92,7 +103,7 @@ void	child_process(t_pipex *pipex, t_cmd *cmd)
 		execute_binary(cmd);
 	if (pipex->i == pipex->num - 1 && define_builtin(cmd))
 		save_update_envp();
-	close(pipex->pipes[1- pipex->used_pipes][0]);
+	close(pipex->pipes[1 - pipex->used_pipes][0]);
 	close(pipex->pipes[pipex->used_pipes][1]);
 	exit (g_data.status);
 }
