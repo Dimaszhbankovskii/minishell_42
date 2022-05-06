@@ -31,7 +31,10 @@
 # define ERROR_CREATE_HEREDOC "heredoc tmpfile"
 # define ERROR_INIT_PIPE_EXECUTOR "pipex.pipe"
 # define ERROR_FORK "pipex.fork"
+# define ERROR_FORK_BIN "Error: fork in execute binary\n" //+++
 
-// # define ERROR
+# define ERROR_EXEC_BIN_INIT "Error: malloc in execute binaty cmd\n" //+++
+# define ERROR_PARS_ENVP_PATH "Error: parsing ENVP PATH\n" //+++
+# define ERROR_NO_BINARY_FILE "Error: binary file not exist\n" //+++
 
 #endif

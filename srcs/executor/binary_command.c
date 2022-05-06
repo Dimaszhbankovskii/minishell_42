@@ -11,12 +11,12 @@ static char	*enviroment_path(char **paths, char *cmd)
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		if (!tmp)
-			end_program("Error: malloc\n", 1, END1);
+			end_program(ERROR_EXEC_BIN_INIT, 1, END1);
 		path_cmd = ft_strjoin(tmp, cmd);
 		if (!path_cmd)
 		{
 			free (tmp);
-			end_program("Error: malloc\n", 1, END1);
+			end_program(ERROR_EXEC_BIN_INIT, 1, END1);
 		}
 		free (tmp);
 		if (!access(path_cmd, X_OK))
@@ -37,7 +37,7 @@ static char	*search_paths(char **paths, char *cmd)
 		{
 			path = ft_strdup(cmd);
 			if (!path)
-				end_program("Error: malloc\n", 1, END1);
+				end_program(ERROR_EXEC_BIN_INIT, 1, END1);
 			return (path);
 		}
 	}
@@ -74,14 +74,14 @@ static void	child_process_binary(t_cmd *cmd, char **envp)
 
 	paths_envp = parsing_paths(envp);
 	if (!paths_envp)
-		exit(warning("Error: parsing ENVP PATH\n", EXIT_FAILURE));
+		exit(warning(ERROR_PARS_ENVP_PATH, EXIT_FAILURE));
 	if (!cmd->args[0])
-		exit(warning("Error: binary file not exist\n", EXIT_FAILURE)); // ???
+		exit(warning(ERROR_NO_BINARY_FILE, 127));
 	path_cmd = search_paths(paths_envp, cmd->args[0]);
 	if (!path_cmd)
 	{
 		free_two_array_char(paths_envp);
-		exit(warning("Error: binary file not exist\n", 127));
+		exit(warning(ERROR_NO_BINARY_FILE, 127));
 	}
 	execve(path_cmd, cmd->args, g_data.envp);
 	free_two_array_char(paths_envp);
@@ -95,7 +95,7 @@ int	execute_binary(t_cmd *cmd)
 
 	child = fork();
 	if (child < 0)
-		return (warning("Error: fork\n", 1)); // error
+		return (warning(ERROR_FORK_BIN, 1));
 	if (!child)
 		child_process_binary(cmd, g_data.envp);
 	else

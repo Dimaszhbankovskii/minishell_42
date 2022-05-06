@@ -92,6 +92,5 @@ void	child_process(t_pipex *pipex, t_cmd *cmd)
 		save_update_envp();
 	close(pipex->pipes[1- pipex->used_pipes][0]);
 	close(pipex->pipes[pipex->used_pipes][1]);
-	
 	exit (g_data.status);
 }

@@ -9,6 +9,8 @@ static void	init_pipex(t_pipex *pipex, t_cmd *cmds)
 	pipex->pipes[0][1] = -1;
 	pipex->pipes[1][0] = -1;
 	pipex->pipes[1][1] = -1;
+
+	pipex->arr_pid = (pid_t *)malloc(sizeof(pid_t) * pipex->num);	
 }
 
 static void	wait_child_process(t_pipex pipex)
@@ -19,7 +21,7 @@ static void	wait_child_process(t_pipex pipex)
 	i = 0;
 	while (i < pipex.num)
 	{
-		waitpid(-1, &status, 0);
+		waitpid(pipex.arr_pid[i], &status, 0);
 		i++;
 	}
 	g_data.status = FT_WEXITSTATUS(status);
@@ -49,10 +51,15 @@ static void	kernel_executor(t_pipex pipex, t_cmd *cmds)
 		execute_cd_exit(cmd, pipex.i);
 		if (pipe(pipex.pipes[pipex.used_pipes]) < 0)
 			end_program(ERROR_INIT_PIPE_EXECUTOR, errno, END2);
-		pipex.pid = fork();
-		if (pipex.pid < 0)
+		
+		// pipex.pid = fork();
+		pipex.arr_pid[pipex.i] = fork();
+
+		// if (pipex.pid < 0)
+		if (pipex.arr_pid[pipex.i] < 0)
 			end_program(ERROR_FORK, errno, END2);
-		if (!pipex.pid)
+		// if (!pipex.pid)
+		if (!pipex.arr_pid[pipex.i])
 		{
 			signal(SIGINT, sigint_handler_child);
 			signal(SIGQUIT, sigint_handler_child);

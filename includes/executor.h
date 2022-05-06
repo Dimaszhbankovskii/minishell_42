@@ -18,6 +18,7 @@ typedef struct s_pipex
 	int		used_pipes;
 	int		pipes[2][2];
 	pid_t	pid;
+	pid_t	*arr_pid;
 }				t_pipex;
 
 void	executor(t_cmd *cmds);

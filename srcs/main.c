@@ -1,20 +1,49 @@
 #include "../includes/minishell.h"
 
+static int	check_input(char *input)
+{
+	while (*input)
+	{
+		if (*input == '|')
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", STDERR_FILENO);
+			g_data.status = 258;
+			return (0);
+		}
+		if (*input == ' ' || *input == '\t')
+			input++;
+		else
+			return (1);
+	}
+	g_data.status = 0;
+	return (0);
+}
+
 static void	kernel_program(void)
 {
-	// можно вставить проверку первого pipe в строке и выходить если есть
+	if (!check_input(g_data.input))
+		return ;
 	while (check_last_pipe(g_data.input))
 		add_input();
 	if (g_data.input && *g_data.input)
 		add_history(g_data.input);
 	if (check_open_quotes(g_data.input))
+	{
+		g_data.status = 1;
 		return ;
+	}
 	lexer();
 	if (invalid_tokens(g_data.tokens))
+	{
+		g_data.status = 258;
 		return ;
+	}
 	parser();
 	if (invalid_redirects(g_data.cmds))
+	{
+		g_data.status = 258;
 		return ;
+	}
 	executor(g_data.cmds);
 }
 

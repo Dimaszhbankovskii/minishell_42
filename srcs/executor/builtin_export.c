@@ -36,8 +36,7 @@ static int	check_valid_export(t_env *env)
 	flag_error = 0;
 	while (tmp)
 	{
-		if (!tmp->key || !check_valid_name_var(tmp->key) || \
-		tmp->str[ft_strlen(tmp->key)] != '=')
+		if (!tmp->key || !check_valid_name_var(tmp->key))
 		{
 			export_error_mess(tmp->key);
 			flag_error = 1;
@@ -89,7 +88,7 @@ void	execute_export(char **envp, t_env *env, char **args)
 		flag_error = check_valid_export(tmp);
 		while (tmp)
 		{
-			if (tmp->key && check_valid_name_var(tmp->key))
+			if (tmp->key && check_valid_name_var(tmp->key) && tmp->value)
 				insert_var_env(env, tmp);
 			tmp = tmp->next;
 		}
