@@ -6,14 +6,14 @@
 /*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:01:39 by vjose             #+#    #+#             */
-/*   Updated: 2022/05/12 15:07:20 by vjose            ###   ########.fr       */
+/*   Updated: 2022/05/12 15:17:57 by vjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 static void	set_shlvl_default(char **env)
 {
 	*env = ft_strdup("SHLVL=1");
-	if(!(*env))
+	if (!(*env))
 		exit(1);
 }
 
@@ -31,21 +31,21 @@ static void	set_shlvl_num_positive(char **env, int num)
 	else if (num == 999)
 	{
 		*env = ft_strdup("SHLVL=");
-		if(!(*env))
+		if (!(*env))
 			exit(1);
 	}
 	else
 	{
 		shlvl = ft_itoa(num + 1);
-		if(!shlvl)
+		if (!shlvl)
 			exit(1);
 		*env = ft_strjoin("SHLVL=", shlvl);
-		if(!(*env))
+		if (!(*env))
 			exit(1);
 	}
 }
 
-static void set_shlvl_num(char **env, char *value)
+static void	set_shlvl_num(char **env, char *value)
 {
 	int	num;
 
@@ -55,32 +55,32 @@ static void set_shlvl_num(char **env, char *value)
 	else
 	{
 		*env = ft_strdup("SHLVL=0");
-		if(!(*env))
+		if (!(*env))
 			exit(1);
 	}
 }
 
 static void	set_shlvl_empty(char ***env)
 {
-	char **new_env;
-	int len;
-	int 	i;
+	char	**new_env;
+	int		len;
+	int		i;
 
 	i = 0;
-	while((*env)[i])
+	while ((*env)[i])
 		i++;
 	len = i;
 	new_env = malloc_two_array_char(len + 1);
 	i = 0;
-	while(i < len)
+	while (i < len)
 	{
 		new_env[i] = ft_strdup((*env)[i]);
-		if(!new_env[i])
+		if (!new_env[i])
 			exit(1);
 		i++;
 	}
 	new_env[i] = ft_strdup("SHLVL=1");
-	if(!(new_env[i]))
+	if (!(new_env[i]))
 		exit(1);
 	free_two_array_char(*env);
 	*env = new_env;
@@ -88,11 +88,11 @@ static void	set_shlvl_empty(char ***env)
 
 void	init_shlvl(char ***new_env)
 {
-	char *value;
-	char **env;
+	char	*value;
+	char	**env;
 
 	env = *new_env;
-	while(*env)
+	while (*env)
 	{
 		if (!ft_strncmp(*env, "SHLVL", 5))
 		{
