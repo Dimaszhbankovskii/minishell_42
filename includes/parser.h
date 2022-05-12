@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/12 15:45:29 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/12 15:54:14 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
@@ -57,7 +69,7 @@ char	*get_key(char *key, char *str);
 char	*get_value(char *value, char *str);
 t_env	*parsing_str_var_env(t_env *env, char *str);
 t_env	*new_elem_env(char *str);
-t_env	*free_elem_env(t_env * env);
+t_env	*free_elem_env(t_env *env);
 
 t_env	*last_elem_env(t_env *env);
 void	add_elem_env(t_env **env, t_env *new);

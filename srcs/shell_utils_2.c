@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell_utils_2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/12 15:46:58 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/12 15:49:00 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 static int	print_fd_error(char *str)
@@ -8,7 +20,7 @@ static int	print_fd_error(char *str)
 	return (0);
 }
 
-static int check_dict(t_dict *dict)
+static int	check_dict(t_dict *dict)
 {
 	while (dict)
 	{

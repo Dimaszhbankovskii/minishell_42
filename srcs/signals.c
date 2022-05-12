@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/12 15:46:50 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/12 15:48:41 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	sigint_handler_main()
@@ -10,7 +22,7 @@ void	sigint_handler_main()
 
 void	display_ctrl_c(int display)
 {
-	struct termios t;
+	struct termios	t;
 
 	tcgetattr(0, &t);
 	if (display == OFF)
@@ -23,7 +35,7 @@ void	display_ctrl_c(int display)
 void	sigint_handler_child(int signum)
 {
 	if (signum == SIGINT)
-		ft_putstr_fd("\n",STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	else if (signum == SIGQUIT)
 		ft_putstr_fd(MESS_QUIT, STDOUT_FILENO);
 	exit(130); // ???

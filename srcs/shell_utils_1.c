@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell_utils_1.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/12 15:49:31 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/12 15:51:21 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	check_last_pipe(char *input)
@@ -5,7 +17,7 @@ int	check_last_pipe(char *input)
 	int	i;
 
 	i = ft_strlen(input) - 1;
-	while(i >=0)
+	while (i >= 0)
 	{
 		if (input[i] == ' ' || input[i] == '\t')
 			i--;
@@ -19,8 +31,8 @@ int	check_last_pipe(char *input)
 
 void	add_input(void)
 {
-	char *new_input;
-	char *line;
+	char	*new_input;
+	char	*line;
 
 	line = readline(PROMPT_ADD_INPUT);
 	if (!line)
@@ -74,8 +86,8 @@ int	invalid_tokens(t_token *tokens)
 		if ((tmp && tmp->next) && \
 		(tmp->type == PIPE && tmp->next->type == PIPE))
 			return (warning(ERROR_SYNTAX_DOUBLE_PIPE, 1));
-		else if ((tmp && tmp->next && tmp->next->next) && 
-		(tmp->type == PIPE && tmp->next->type == SEPARATOR && 
+		else if ((tmp && tmp->next && tmp->next->next) && \
+		(tmp->type == PIPE && tmp->next->type == SEPARATOR && \
 		tmp->next->next->type == PIPE))
 			return (warning(ERROR_SYNTAX_DOUBLE_PIPE_SEP, 1));
 		tmp = tmp->next;

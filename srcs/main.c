@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/12 15:49:28 by vjose             #+#    #+#             */
+/*   Updated: 2022/05/12 15:50:07 by vjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 static int	check_input(char *input)
@@ -6,7 +18,8 @@ static int	check_input(char *input)
 	{
 		if (*input == '|')
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", STDERR_FILENO);
+			ft_putstr_fd("minishell: syntax error near \
+				unexpected token `|'\n", STDERR_FILENO);
 			g_data.status = 258;
 			return (0);
 		}
