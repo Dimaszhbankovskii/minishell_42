@@ -6,7 +6,7 @@
 /*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 21:24:35 by vjose             #+#    #+#             */
-/*   Updated: 2022/05/06 21:24:36 by vjose            ###   ########.fr       */
+/*   Updated: 2022/05/12 16:48:25 by vjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,6 @@ int	execute_binary(t_cmd *cmd)
 		child_process_binary(cmd, g_data.envp);
 	else
 		waitpid(child, &g_data.status, 0);
-	g_data.status = FT_WEXITSTATUS(g_data.status);
+	g_data.status = ft_wexitstatus(g_data.status);
 	return (0);
 }

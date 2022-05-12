@@ -6,7 +6,7 @@
 /*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:45:54 by vjose             #+#    #+#             */
-/*   Updated: 2022/05/12 15:45:55 by vjose            ###   ########.fr       */
+/*   Updated: 2022/05/12 16:49:20 by vjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@
 # define MESS_SIG_EOF "exit\n"
 # define MESS_QUIT "Quit: 3\n"
 
-# define FT_WEXITSTATUS(x) ((x >> 8) & 0x000000ff)
-
 # define END1 0
 # define END2 1
 
@@ -61,19 +59,21 @@ char	**new_envp(char **envp);
 void	init_g_data(void);
 
 void	display_ctrl_c(int display);
-void	sigint_handler_main();
+void	sigint_handler_main(int signum);
 void	sigint_handler_child(int signum);
 
 void	end_program(char *mess, int code, int mode);
 
 void	clear_data_loop(void);
 void	clear_g_data(void);
+void	free_and_exit(t_pipex pipex, char *error);
 
 int		check_last_pipe(char *input);
 void	add_input(void);
 int		check_open_quotes(char *input);
 int		invalid_tokens(t_token *tokens);
 int		invalid_redirects(t_cmd *cmds);
+void	unlink_tmp_files(t_cmd *cmds);
 
 int		max(int a, int b);
 char	**malloc_two_array_char(int len);
@@ -82,6 +82,7 @@ void	add_back_elem_two_array_char(char **array, char *elem, int len);
 char	*find_str(char **array, char *str);
 int		size_two_array_char(char **array);
 int		ft_is_num(char *str);
+int		ft_wexitstatus(int x);
 
 void	error_mess(char *mess, int code);
 int		warning(char *mess, int code);

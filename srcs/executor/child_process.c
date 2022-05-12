@@ -6,7 +6,7 @@
 /*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 21:24:18 by vjose             #+#    #+#             */
-/*   Updated: 2022/05/06 21:28:15 by vjose            ###   ########.fr       */
+/*   Updated: 2022/05/12 16:41:05 by vjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	ft_strcmp_lower_case(char const *str1, char const *str2)
 
 int	define_builtin(t_cmd *cmd)
 {
-	if (cmd->args)
+	if (cmd->args && cmd->args[0])
 	{
 		if (!ft_strcmp_lower_case(cmd->args[0], "echo"))
 			return (BUILTIN_ECHO);
@@ -100,7 +100,10 @@ void	child_process(t_pipex *pipex, t_cmd *cmd)
 	if (type_builtin)
 		execute_builtin(cmd, type_builtin);
 	else
-		execute_binary(cmd);
+	{
+		if (cmd->args && cmd->args[0])
+			execute_binary(cmd);
+	}
 	if (pipex->i == pipex->num - 1 && define_builtin(cmd))
 		save_update_envp();
 	close(pipex->pipes[1 - pipex->used_pipes][0]);

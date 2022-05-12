@@ -6,7 +6,7 @@
 /*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 21:24:01 by vjose             #+#    #+#             */
-/*   Updated: 2022/05/06 21:26:13 by vjose            ###   ########.fr       */
+/*   Updated: 2022/05/12 16:45:37 by vjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	init_pipex(t_pipex *pipex, t_cmd *cmds)
 	pipex->pipes[1][1] = -1;
 	pipex->pid = (pid_t *)malloc(sizeof(pid_t) * pipex->num);
 	if (!pipex->pid)
-		exit (1); // error	
+		end_program("Error: malloc in init pipex\n", 1, END1);
 }
 
 static void	wait_child_process(t_pipex pipex)
@@ -37,7 +37,7 @@ static void	wait_child_process(t_pipex pipex)
 		waitpid(pipex.pid[i], &status, 0);
 		i++;
 	}
-	g_data.status = FT_WEXITSTATUS(status);
+	g_data.status = ft_wexitstatus(status);
 }
 
 static void	execute_cd_exit(t_cmd *cmd, int index)
@@ -63,16 +63,10 @@ static void	kernel_executor(t_pipex pipex, t_cmd *cmds)
 	{
 		execute_cd_exit(cmd, pipex.i);
 		if (pipe(pipex.pipes[pipex.used_pipes]) < 0)
-		{
-			free (pipex.pid);
-			end_program(ERROR_INIT_PIPE_EXECUTOR, errno, END2);
-		}
+			free_and_exit(pipex, ERROR_INIT_PIPE_EXECUTOR);
 		pipex.pid[pipex.i] = fork();
 		if (pipex.pid[pipex.i] < 0)
-		{
-			free (pipex.pid);
-			end_program(ERROR_FORK, errno, END2);
-		}
+			free_and_exit(pipex, ERROR_FORK);
 		if (!pipex.pid[pipex.i])
 			child_process(&pipex, cmd);
 		close(pipex.pipes[1 - pipex.used_pipes][0]);
@@ -82,19 +76,6 @@ static void	kernel_executor(t_pipex pipex, t_cmd *cmds)
 		pipex.used_pipes = 1 - pipex.used_pipes;
 		pipex.i++;
 		cmd = cmd->next;
-	}
-}
-
-void	unlink_tmp_files(t_cmd *cmds)
-{
-	t_cmd	*tmp;
-
-	tmp = cmds;
-	while (tmp)
-	{
-		if (tmp->tmpname && unlink(tmp->tmpname) < 0)
-			end_program(tmp->tmpname, errno, END2);
-		tmp = tmp->next;
 	}
 }
 

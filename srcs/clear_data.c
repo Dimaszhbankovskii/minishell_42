@@ -6,7 +6,7 @@
 /*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:49:18 by vjose             #+#    #+#             */
-/*   Updated: 2022/05/12 15:49:19 by vjose            ###   ########.fr       */
+/*   Updated: 2022/05/12 16:29:35 by vjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,10 @@ void	clear_g_data(void)
 	close(g_data.fd[1][1]);
 	close(g_data.fd[2][0]);
 	close(g_data.fd[2][1]);
+}
+
+void	free_and_exit(t_pipex pipex, char *error)
+{
+	free (pipex.pid);
+	end_program(error, errno, END2);
 }

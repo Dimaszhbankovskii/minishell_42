@@ -6,7 +6,7 @@
 /*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:31:26 by vjose             #+#    #+#             */
-/*   Updated: 2022/05/12 15:34:14 by vjose            ###   ########.fr       */
+/*   Updated: 2022/05/12 16:51:01 by vjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,9 @@ char	*find_str(char **array, char *str)
 		i++;
 	}
 	return (NULL);
+}
+
+int	ft_wexitstatus(int x)
+{
+	return ((x >> 8) & 0x000000ff);
 }

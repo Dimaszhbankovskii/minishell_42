@@ -6,7 +6,7 @@
 /*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 21:24:20 by vjose             #+#    #+#             */
-/*   Updated: 2022/05/06 21:30:21 by vjose            ###   ########.fr       */
+/*   Updated: 2022/05/12 16:18:41 by vjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	execute_pwd(void)
 
 	path = getcwd(NULL, 0);
 	if (!path)
-		exit(1); // malloc error
+		end_program("Error: malloc in pwd\n", 1, END1);
 	ft_putstr_fd(path, STDOUT_FILENO);
 	write(STDOUT_FILENO, "\n", 1);
 	free (path);

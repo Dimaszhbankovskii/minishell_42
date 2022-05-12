@@ -6,7 +6,7 @@
 /*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:46:58 by vjose             #+#    #+#             */
-/*   Updated: 2022/05/12 15:49:00 by vjose            ###   ########.fr       */
+/*   Updated: 2022/05/12 16:21:23 by vjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,17 @@ int	invalid_redirects(t_cmd *cmds)
 		tmp = tmp->next;
 	}
 	return (0);
+}
+
+void	unlink_tmp_files(t_cmd *cmds)
+{
+	t_cmd	*tmp;
+
+	tmp = cmds;
+	while (tmp)
+	{
+		if (tmp->tmpname && unlink(tmp->tmpname) < 0)
+			end_program(tmp->tmpname, errno, END2);
+		tmp = tmp->next;
+	}
 }

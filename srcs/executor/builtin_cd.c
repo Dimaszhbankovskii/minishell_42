@@ -6,7 +6,7 @@
 /*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 21:24:27 by vjose             #+#    #+#             */
-/*   Updated: 2022/05/06 21:24:28 by vjose            ###   ########.fr       */
+/*   Updated: 2022/05/12 16:20:47 by vjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	cd_update_oldpwd(char *old_path)
 	t_env	*tmp;
 
 	str = ft_strjoin("OLDPWD=", old_path);
-	// if (!str)
-	// 	return (-1);
+	if (!str)
+		end_program("Error: malloc in updating OLDPWD\n", 1, END1);
 	tmp = find_elem_env(&g_data.env, "OLDPWD");
 	if (tmp)
 	{
