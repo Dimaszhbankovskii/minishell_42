@@ -25,8 +25,9 @@ SRCS_LIST	=	main.c \
 				clear_data.c \
 				shell_utils_1.c \
 				shell_utils_2.c \
-				utils.c \
-				tmp_check.c \
+				utils_1.c \
+				utils_2.c \
+				init_shlvl.c \
 				error_mess.c
 SRCS		=	$(addprefix $(SRCS_DIR)/,$(SRCS_LIST))
 
