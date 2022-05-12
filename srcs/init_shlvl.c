@@ -16,7 +16,7 @@ static void	set_shlvl_default(char **env)
 {
 	*env = ft_strdup("SHLVL=1");
 	if (!(*env))
-		exit(1);
+		end_program(ERROR_SHLVL, 1, END1);
 }
 
 static void	set_shlvl_num_positive(char **env, int num)
@@ -34,16 +34,16 @@ static void	set_shlvl_num_positive(char **env, int num)
 	{
 		*env = ft_strdup("SHLVL=");
 		if (!(*env))
-			exit(1);
+			end_program(ERROR_SHLVL, 1, END1);
 	}
 	else
 	{
 		shlvl = ft_itoa(num + 1);
 		if (!shlvl)
-			exit(1);
+			end_program(ERROR_SHLVL, 1, END1);
 		*env = ft_strjoin("SHLVL=", shlvl);
 		if (!(*env))
-			exit(1);
+			end_program(ERROR_SHLVL, 1, END1);
 	}
 }
 
@@ -58,7 +58,7 @@ static void	set_shlvl_num(char **env, char *value)
 	{
 		*env = ft_strdup("SHLVL=0");
 		if (!(*env))
-			exit(1);
+			end_program(ERROR_SHLVL, 1, END1);
 	}
 }
 
@@ -78,12 +78,12 @@ static void	set_shlvl_empty(char ***env)
 	{
 		new_env[i] = ft_strdup((*env)[i]);
 		if (!new_env[i])
-			exit(1);
+			end_program(ERROR_SHLVL, 1, END1);
 		i++;
 	}
 	new_env[i] = ft_strdup("SHLVL=1");
 	if (!(new_env[i]))
-		exit(1);
+		end_program(ERROR_SHLVL, 1, END1);
 	free_two_array_char(*env);
 	*env = new_env;
 }
@@ -100,7 +100,7 @@ void	init_shlvl(char ***new_env)
 		{
 			value = ft_substr(*env, 6, ft_strlen(*env) - 6);
 			if (!value)
-				exit(1);
+				end_program(ERROR_SHLVL, 1, END1);
 			free(*env);
 			if (ft_is_num(value))
 				set_shlvl_num(env, value);

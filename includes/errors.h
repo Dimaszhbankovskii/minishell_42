@@ -15,6 +15,7 @@
 
 # define ERROR_NUM_ARGS "Error: num args in input minishell\n"
 # define ERROR_MALLOC_ENVP "Error: malloc in envp\n"
+# define ERROR_SHLVL "Error: amlloc in init SHLVL\n"
 # define ERROR_INIT_LIST_ENV "Error: init list env\n"
 # define ERROR_G_PIPE "g_data.pipe"
 # define ERROR_READLINE "Error: readline\n"
