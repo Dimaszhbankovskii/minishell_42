@@ -35,8 +35,8 @@ typedef struct s_pipex
 void	executor(t_cmd *cmds);
 void	handling_heredoc(t_cmd *cmds);
 void	child_process(t_pipex *pipex, t_cmd *cmd);
-void	redirect_input(t_cmd *cmd);
-void	redirect_output(t_cmd *cmd);
+void	redirect_input(t_pipex *pipex, t_cmd *cmd);
+void	redirect_output(t_pipex *pipex, t_cmd *cmd);
 
 int		define_builtin(t_cmd *cmd);
 

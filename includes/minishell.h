@@ -23,7 +23,6 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <limits.h>
-# include <sys/wait.h> // ubuntu header need to delete
 # include "../libft/libft.h"
 # include "parser.h"
 # include "executor.h"
@@ -56,6 +55,7 @@ typedef struct s_main
 t_main	g_data;
 
 char	**new_envp(char **envp);
+void	init_shlvl(char ***new_env);
 void	init_g_data(void);
 
 void	display_ctrl_c(int display);
@@ -86,10 +86,5 @@ int		ft_wexitstatus(int x);
 
 void	error_mess(char *mess, int code);
 int		warning(char *mess, int code);
-
-// delete
-void	print_list_env(void);
-void	print_list_env_tmp(t_env *head);
-void	check_print(void);
 
 #endif

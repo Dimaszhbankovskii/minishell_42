@@ -27,11 +27,11 @@
 # define ERROR_COMBINE_TOKEN "Error: malloc in combine token\n"
 
 # define ERROR_SYNTAX_FIRST_PIPE "minishell: syntax error near \
-											unexpected token `|'\n"
+unexpected token `|'\n"
 # define ERROR_SYNTAX_DOUBLE_PIPE "minishell: syntax error near \
-											unexpected token `||'\n"
+unexpected token `||'\n"
 # define ERROR_SYNTAX_DOUBLE_PIPE_SEP "minishell: syntax error near \
-											unexpected token `|'\n"
+unexpected token `|'\n"
 
 # define ERROR_MALLOC_CMD "Error: malloc cmd\n"
 # define ERROR_ADD_ELEM_TWO_ARR "Error: malloc in add elem two arr\n"
@@ -40,9 +40,9 @@
 # define ERROR_INIT_ID_CMD "Error: malloc id cmd\n"
 
 # define ERROR_SYNTAX_NO_REDIRECT "minishell: syntax error near \
-									unexpected token `newline'\n"
+unexpected token `newline'\n"
 # define ERROR_SYNTAX_INVALID_REDIRECT_1 "minishell: syntax error near \
-													unexpected token `"
+unexpected token `"
 # define ERROR_SYNTAX_INVALID_REDIRECT_2 "'\n"
 
 # define ERROR_CREATE_HEREDOC "heredoc tmpfile"

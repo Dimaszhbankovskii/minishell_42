@@ -15,15 +15,15 @@
 
 # include "minishell.h"
 
-# define SEPARATOR 1 // ' ', '\t'
+# define SEPARATOR 1
 # define WORD 2
-# define QUOTES 3 // ''
-# define DQUOTES 4 // ""
-# define RDR_IN 5 // <
-# define RDR_OUT 6 // >
-# define RDR_SRC 7 // <<
-# define RDR_APD 8 // >>
-# define PIPE 9 // |
+# define QUOTES 3
+# define DQUOTES 4
+# define RDR_IN 5
+# define RDR_OUT 6
+# define RDR_SRC 7
+# define RDR_APD 8
+# define PIPE 9
 
 typedef struct s_env
 {

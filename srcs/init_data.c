@@ -31,6 +31,7 @@ char	**new_envp(char **envp)
 		}
 		i++;
 	}
+	init_shlvl(&new_envp);
 	return (new_envp);
 }
 

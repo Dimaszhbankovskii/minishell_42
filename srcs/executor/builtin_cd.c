@@ -93,6 +93,6 @@ void	execute_cd(char **args, int flag)
 			g_data.status = 1;
 		}
 	}
-	else if (flag)
+	else
 		g_data.status = 0;
 }

@@ -20,7 +20,7 @@ static void	define_input_output(t_pipex *pipex, t_cmd *cmd)
 		close(pipex->pipes[1 - pipex->used_pipes][0]);
 	}
 	else
-		redirect_input(cmd);
+		redirect_input(pipex, cmd);
 	if (!cmd->outfd && pipex->i < pipex->num - 1)
 	{
 		dup2(pipex->pipes[pipex->used_pipes][1], STDOUT_FILENO);
@@ -28,7 +28,7 @@ static void	define_input_output(t_pipex *pipex, t_cmd *cmd)
 		close(pipex->pipes[pipex->used_pipes][1]);
 	}
 	else
-		redirect_output(cmd);
+		redirect_output(pipex, cmd);
 }
 
 static void	execute_builtin(t_cmd *cmd, int type_builtin)

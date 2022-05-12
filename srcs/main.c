@@ -18,8 +18,7 @@ static int	check_input(char *input)
 	{
 		if (*input == '|')
 		{
-			ft_putstr_fd("minishell: syntax error near \
-				unexpected token `|'\n", STDERR_FILENO);
+			ft_putstr_fd(ERROR_SYNTAX_FIRST_PIPE, STDERR_FILENO);
 			g_data.status = 258;
 			return (0);
 		}

@@ -38,8 +38,8 @@ static int	ft_is_num_2(char *str, int sign)
 		else if ((sum == 922337203685477580LL && *str > '7') || \
 					(sum > 922337203685477580LL))
 			return (0);
-	sum = sum * 10 + (*str - '0');
-	str++;
+		sum = sum * 10 + (*str - '0');
+		str++;
 	}
 	return (1);
 }

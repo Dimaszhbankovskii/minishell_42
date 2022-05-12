@@ -82,7 +82,10 @@ void	execute_env(void)
 void	execute_exit(t_cmd *cmd, int flag)
 {
 	if (!flag)
+	{
+		g_data.status = 0;
 		return ;
+	}
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (cmd->args[1])
 	{

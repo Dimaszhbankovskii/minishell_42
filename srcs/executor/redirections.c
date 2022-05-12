@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	redirect_input(t_cmd *cmd)
+void	redirect_input(t_pipex *pipex, t_cmd *cmd)
 {
 	t_dict	*tmp;
 	int		fd;
@@ -28,7 +28,11 @@ void	redirect_input(t_cmd *cmd)
 		else if (tmp->key == RDR_SRC)
 			fd = open(cmd->tmpname, O_RDONLY);
 		if (fd < 0)
+		{
+			if (pipex->i == pipex->num - 1 && define_builtin(cmd))
+				save_update_envp();
 			error_mess(tmp->value, errno);
+		}
 		tmp = tmp->next;
 	}
 	if (fd && dup2(fd, STDIN_FILENO) < 0)
@@ -37,7 +41,7 @@ void	redirect_input(t_cmd *cmd)
 		close(fd);
 }
 
-void	redirect_output(t_cmd *cmd)
+void	redirect_output(t_pipex *pipex, t_cmd *cmd)
 {
 	t_dict	*tmp;
 	int		fd;
@@ -53,7 +57,11 @@ void	redirect_output(t_cmd *cmd)
 		else if (tmp->key == RDR_APD)
 			fd = open(tmp->value, O_WRONLY | O_CREAT | O_APPEND, 0777);
 		if (fd < 0)
+		{
+			if (pipex->i == pipex->num - 1 && define_builtin(cmd))
+				save_update_envp();
 			error_mess(tmp->value, errno);
+		}
 		tmp = tmp->next;
 	}
 	if (fd && dup2(fd, STDOUT_FILENO) < 0)
