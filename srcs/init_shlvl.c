@@ -6,9 +6,11 @@
 /*   By: vjose <vjose@student.21-school.ru>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:01:39 by vjose             #+#    #+#             */
-/*   Updated: 2022/05/12 15:17:57 by vjose            ###   ########.fr       */
+/*   Updated: 2022/05/12 15:37:09 by vjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/minishell.h"
 
 static void	set_shlvl_default(char **env)
 {
