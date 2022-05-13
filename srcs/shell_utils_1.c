@@ -83,7 +83,7 @@ int	invalid_tokens(t_token *tokens)
 	tmp = tokens;
 	while (tmp)
 	{
-		if ((tmp && tmp->next) && \
+		if ((tmp->next) && \
 		(tmp->type == PIPE && tmp->next->type == PIPE))
 			return (warning(ERROR_SYNTAX_DOUBLE_PIPE, 1));
 		else if ((tmp && tmp->next && tmp->next->next) && \

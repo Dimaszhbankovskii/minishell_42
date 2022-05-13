@@ -43,10 +43,6 @@ static void	execute_builtin(t_cmd *cmd, int type_builtin)
 		execute_unset(&g_data.env, cmd->args);
 	else if (type_builtin == BUILTIN_EXPORT)
 		execute_export(g_data.envp, g_data.env, cmd->args);
-	else if (type_builtin == BUILTIN_EXIT)
-		return ;
-	else if (type_builtin == BUILTIN_CD)
-		return ;
 }
 
 static int	ft_strcmp_lower_case(char const *str1, char const *str2)

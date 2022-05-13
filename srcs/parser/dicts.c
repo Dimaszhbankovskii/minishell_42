@@ -23,7 +23,7 @@ t_dict	*new_dict(int key, t_token *token)
 	if (token && token->type != PIPE)
 	{
 		new->value = ft_strdup(token->content);
-		if (!new)
+		if (!new->value)
 		{
 			free (new);
 			end_program(ERROR_INIT_DICT, 1, END1);

@@ -85,11 +85,11 @@ void	parser(void)
 		init_cmd(token);
 		while (token && token->type != PIPE)
 		{
-			if (token && (token->type == WORD || token->type == QUOTES || \
-			token->type == DQUOTES))
+			if (token->type == WORD || token->type == QUOTES \
+			|| token->type == DQUOTES)
 				cmd_get_args(token->content);
-			if (token && (token->type == RDR_IN || token->type == RDR_OUT \
-			|| token->type == RDR_SRC || token->type == RDR_APD))
+			if (token->type == RDR_IN || token->type == RDR_OUT \
+			|| token->type == RDR_SRC || token->type == RDR_APD)
 				token = cmd_get_redirect(token);
 			if (token && token->type != PIPE)
 				token = token->next;
