@@ -42,6 +42,7 @@ static void	set_shlvl_num_positive(char **env, int num)
 		if (!shlvl)
 			end_program(ERROR_SHLVL, 1, END1);
 		*env = ft_strjoin("SHLVL=", shlvl);
+		free(shlvl);
 		if (!(*env))
 			end_program(ERROR_SHLVL, 1, END1);
 	}
