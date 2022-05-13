@@ -49,7 +49,8 @@ void	execute_echo(t_cmd *cmd)
 		}
 		tmp = tmp->next;
 	}
-	if (cmd->l_arg->next || ft_strcmp(cmd->l_arg->next->value, "-n"))
+	if (cmd->l_arg->next && cmd->l_arg->next->value && \
+	ft_strcmp(cmd->l_arg->next->value, "-n"))
 		ft_putchar_fd('\n', STDOUT_FILENO);
 }
 

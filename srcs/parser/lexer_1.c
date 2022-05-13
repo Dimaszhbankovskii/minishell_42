@@ -81,7 +81,7 @@ void	lexer(void)
 	int		i;
 
 	i = 0;
-	while (*(g_data.input + i) && i < (int)ft_strlen(g_data.input))
+	while (i < (int)ft_strlen(g_data.input) && *(g_data.input + i))
 	{
 		if (ft_strchr(" \t", *(g_data.input + i)))
 			token_separator(&i);
