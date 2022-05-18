@@ -1,7 +1,7 @@
 NAME		=	minishell
 
 CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS		=	-Wall -Werror -Wextra
 READLINE	=	-lreadline
 
 RL_INCLUDE	=	/Users/${USER}/.brew/opt/readline/include
