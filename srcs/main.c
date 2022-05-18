@@ -22,7 +22,7 @@ static int	check_input(char *input)
 			g_data.status = 258;
 			return (0);
 		}
-		if (*input == ' ' || *input == '\t')
+		if (ft_strchr(" \t\v\f\r", *input))
 			input++;
 		else
 			return (1);

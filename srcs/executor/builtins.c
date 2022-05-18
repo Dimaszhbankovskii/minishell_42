@@ -105,5 +105,5 @@ void	execute_exit(t_cmd *cmd, int flag)
 		}
 		end_program(NULL, ft_atoi(cmd->args[1]), END1);
 	}
-	end_program(NULL, 0, END1);
+	end_program(NULL, g_data.status, END1);
 }

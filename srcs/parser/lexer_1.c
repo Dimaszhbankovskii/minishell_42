@@ -23,7 +23,7 @@ static char	*word_token(int *index)
 	if (!tmp)
 		return (NULL);
 	i = 0;
-	while (!ft_strchr(" \t<>|\"\'", content[i]))
+	while (!ft_strchr(" \t\v\f\r<>|\"\'", content[i]))
 	{
 		tmp[i] = content[i];
 		i++;
@@ -72,7 +72,7 @@ static void	token_word_quotes_dquotes(int *i)
 static void	token_separator(int *i)
 {
 	add_token(&g_data.tokens, new_token(ft_strdup(" "), SEPARATOR, i));
-	while (*(g_data.input + *i) && ft_strchr(" \t", *(g_data.input + *i)))
+	while (*(g_data.input + *i) && ft_strchr(" \t\v\f\r", *(g_data.input + *i)))
 		(*i)++;
 }
 
@@ -83,7 +83,7 @@ void	lexer(void)
 	i = 0;
 	while (i < (int)ft_strlen(g_data.input) && *(g_data.input + i))
 	{
-		if (ft_strchr(" \t", *(g_data.input + i)))
+		if (ft_strchr(" \t\v\f\r", *(g_data.input + i)))
 			token_separator(&i);
 		if (!ft_strncmp(g_data.input + i, "<<", 2))
 			add_token(&g_data.tokens, new_token(ft_strdup("<<"), RDR_SRC, &i));

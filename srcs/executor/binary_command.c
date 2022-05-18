@@ -57,35 +57,37 @@ static char	*search_paths(char **paths, char *cmd)
 	return (path);
 }
 
-static char	**parsing_paths(char **envp)
+static int	parsing_paths(char ***paths, char **envp)
 {
 	char	*tmp1;
 	char	*tmp2;
-	char	**paths;
 
 	tmp1 = find_str(envp, "PATH=");
 	if (!tmp1)
-		return (NULL);
+		return (1);
 	tmp2 = ft_strdup(tmp1 + ft_strlen("PATH="));
 	if (!tmp2)
-		return (NULL);
-	paths = ft_split(tmp2, ':');
-	if (!paths)
+		return (2);
+	*paths = ft_split(tmp2, ':');
+	if (!*paths)
 	{
 		free(tmp2);
-		return (NULL);
+		return (2);
 	}
 	free (tmp2);
-	return (paths);
+	return (0);
 }
 
 static void	child_process_binary(t_cmd *cmd, char **envp)
 {
 	char	**paths_envp;
 	char	*path_cmd;
+	int		res;
 
-	paths_envp = parsing_paths(envp);
-	if (!paths_envp)
+	res = parsing_paths(&paths_envp, envp);
+	if (res == 1)
+		exit(warning(ERROR_NO_BINARY_FILE, EXIT_FAILURE));
+	else if (res == 2)
 		exit(warning(ERROR_PARS_ENVP_PATH, EXIT_FAILURE));
 	if (!cmd->args[0])
 		exit(warning(ERROR_NO_BINARY_FILE, 127));
