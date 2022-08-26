@@ -1,6 +1,6 @@
 # Minishell_42 <img alt="C icon" src="./images/C_logo.png" width="50" height="50"> <img alt="42 icon" src="./images/42-logo.svg.png"  width="50" height="50"> <img alt="21 icon" src="./images/21-logo.webp" width="50" height="50">
 
-> The objective of this project is for you to create a simple shell on base bash for Linux and MacOs.
+> The objective of this project is to create a simple shell on base bash for Linux and MacOs.
 
 # Contents <a name = "RefContents"></a>
 
